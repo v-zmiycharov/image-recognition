@@ -31,6 +31,9 @@ with open(os.path.join(definitions.IMAGE_NET_DIR, "list.txt")) as list_file:
             print("{2}: {0} ({1}):".format(animal, synset_id, strftime("%Y-%m-%d %H:%M:%S", localtime())))
             if not os.path.exists(animal_dir):
                 os.makedirs(animal_dir)
+            animal_dir = os.path.join(animal_dir, "images")
+            if not os.path.exists(animal_dir):
+                os.makedirs(animal_dir)
 
             url = generate_download_url(synset_id)
             file_path = os.path.join(animal_dir, synset_id + ".tar")
