@@ -1,7 +1,7 @@
 alligator - http://image-net.org/download/synset?wnid=n01698434&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
 antelope - http://image-net.org/download/synset?wnid=n02419796&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
 bat - http://image-net.org/download/synset?wnid=n02139199&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
-bear - http://www.image-net.org/download/synset?wnid=n02131653&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
+bear - http://image-net.org/download/synset?wnid=n02131653&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
 bison - http://image-net.org/download/synset?wnid=n02410509&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
 butterfly - http://image-net.org/download/synset?wnid=n02274259&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
 camel - http://image-net.org/download/synset?wnid=n02437136&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
@@ -16,43 +16,42 @@ donkey - http://image-net.org/download/synset?wnid=n02389559&username=vzmiycharo
 duck - http://image-net.org/download/synset?wnid=n01846331&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
 eagle - http://image-net.org/download/synset?wnid=n01613294&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
 elephant - http://image-net.org/download/synset?wnid=n02503517&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
-fly - 
-fox - 
-frog - 
-giraffe - 
+fly - http://image-net.org/download/synset?wnid=n02190166&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
+fox - http://image-net.org/download/synset?wnid=n02118333&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
+frog - http://image-net.org/download/synset?wnid=n01641739&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
+giraffe - http://image-net.org/download/synset?wnid=n02439033&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
 goat - http://image-net.org/download/synset?wnid=n02416880&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
 goldfish - http://image-net.org/download/synset?wnid=n01443537&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
 horse - http://image-net.org/download/synset?wnid=n02374451&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
-hyena - 
-iguana - 
-jaguar - 
-kangaroo - 
-leopard - 
-lion - 
+hyena - http://image-net.org/download/synset?wnid=n02116738&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
+iguana - http://image-net.org/download/synset?wnid=n01677366&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
+jaguar - http://image-net.org/download/synset?wnid=n02128925&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
+kangaroo - http://image-net.org/download/synset?wnid=n01877134&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
+lion - http://image-net.org/download/synset?wnid=n02129165&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
 llama - http://image-net.org/download/synset?wnid=n02437616&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
-monkey - 
-mosquito - 
+monkey - http://image-net.org/download/synset?wnid=n02484322&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
+mosquito - http://image-net.org/download/synset?wnid=n02200198&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
 mouse - http://image-net.org/download/synset?wnid=n02330245&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
-octopus - 
-ostrich - 
-owl - 
-panda - 
-parrot - 
-penguin - 
+octopus - http://image-net.org/download/synset?wnid=n01970164&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
+ostrich - http://image-net.org/download/synset?wnid=n01518878&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
+owl - http://image-net.org/download/synset?wnid=n01621127&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
+panda - http://image-net.org/download/synset?wnid=n02510455&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
+parrot - http://image-net.org/download/synset?wnid=n01817346&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
+penguin - http://image-net.org/download/synset?wnid=n02055803&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
 pig - http://image-net.org/download/synset?wnid=n02395406&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
-pigeon - 
-piranha - 
-puma - 
+pigeon - http://image-net.org/download/synset?wnid=n01814921&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
+piranha - http://image-net.org/download/synset?wnid=n02584449&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
 rabbit - http://image-net.org/download/synset?wnid=n02324587&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
-raven - 
-scorpion - 
-shark - 
+raven - http://image-net.org/download/synset?wnid=n01579260&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
+scorpion - http://image-net.org/download/synset?wnid=n01770393&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
+shark - http://image-net.org/download/synset?wnid=n01482330&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
 sheep - http://image-net.org/download/synset?wnid=n10588074&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
-snail - 
-snake - 
-swan - 
-tiger - 
+snail - http://image-net.org/download/synset?wnid=n01944390&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
+snake - http://image-net.org/download/synset?wnid=n01726692&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
+spider - http://image-net.org/download/synset?wnid=n01772222&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
+swan - http://image-net.org/download/synset?wnid=n01858441&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
+tiger - http://image-net.org/download/synset?wnid=n02129604&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
 turkey - http://image-net.org/download/synset?wnid=n01794344&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
-whale - 
-worm - 
-zebra - 
+whale - http://image-net.org/download/synset?wnid=n02062744&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
+worm - http://image-net.org/download/synset?wnid=n01922303&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
+zebra - http://image-net.org/download/synset?wnid=n02391049&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford
