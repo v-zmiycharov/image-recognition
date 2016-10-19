@@ -4,6 +4,8 @@ import requests
 from time import localtime, strftime
 import tarfile
 from multiprocessing.dummy import Pool as ThreadPool
+import random
+import ntpath
 
 def generate_download_url(synset_id):
     return "http://image-net.org/download/synset?wnid={0}&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford" \
@@ -22,6 +24,15 @@ def extract_tar_file(file_path):
             folder_path = os.path.dirname(file_path)
             tar.extractall(path=folder_path)
 
+def create_test_set(images_dir, test_dir):
+    images_count = len(os.listdir(images_dir))
+    test_images_count = images_count // 20
+
+    random_test_images = random.sample(os.listdir(images_dir), test_images_count)
+    for file_name in random_test_images:
+        os.rename(os.path.join(images_dir, file_name), os.path.join(test_dir, file_name))
+
+
 def get_metadata():
     with open(os.path.join(definitions.IMAGE_NET_DIR, "list.txt")) as list_file:
         for line in list_file:
@@ -37,13 +48,18 @@ def get_metadata():
                 if not os.path.exists(images_dir):
                     os.makedirs(images_dir)
 
-                url = generate_download_url(synset_id)
-                file_path = os.path.join(images_dir, synset_id + ".tar")
+                test_dir = os.path.join(animal_dir, definitions.TEST_DIR_NAME)
+                if not os.path.exists(test_dir):
+                    os.makedirs(test_dir)
 
-                yield (animal, synset_id, animal_dir, images_dir, file_path, url)
+                url = generate_download_url(synset_id)
+                file_name = synset_id + ".tar"
+                file_path = os.path.join(images_dir, file_name)
+
+                yield (animal, synset_id, animal_dir, images_dir, test_dir, file_name, file_path, url)
 
 def process_animal(tupple):
-    (animal, synset_id, animal_dir, images_dir, file_path, url) = tupple
+    (animal, synset_id, animal_dir, images_dir, test_dir, file_name, file_path, url) = tupple
     if len(os.listdir(images_dir)) == 0:
         print("{2}: Downloading {0} ({1}) ...".format(animal, synset_id, strftime("%Y-%m-%d %H:%M:%S", localtime())))
         download_file(url, file_path)
@@ -54,8 +70,16 @@ def process_animal(tupple):
         print("{2}: Deleting {0} ({1}) ...".format(animal, synset_id, strftime("%Y-%m-%d %H:%M:%S", localtime())))
         os.remove(file_path)
 
+    if len(os.listdir(test_dir)) == 0:
+        print("{2}: Creating test set {0} ({1}) ...".format(animal, synset_id, strftime("%Y-%m-%d %H:%M:%S", localtime())))
+        create_test_set(images_dir, test_dir)
+
 
 pool = ThreadPool(4)
 pool.map(process_animal, get_metadata())
+
+# for tuple in get_metadata():
+#     process_animal(tuple)
+
 
 
