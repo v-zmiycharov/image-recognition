@@ -78,8 +78,5 @@ def process_animal(tupple):
 pool = ThreadPool(4)
 pool.map(process_animal, get_metadata())
 
-# for tuple in get_metadata():
-#     process_animal(tuple)
-
 
 
