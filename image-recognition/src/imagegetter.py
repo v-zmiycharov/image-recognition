@@ -3,6 +3,7 @@ import os
 import requests
 from time import localtime, strftime
 import tarfile
+from multiprocessing.dummy import Pool as ThreadPool
 
 def generate_download_url(synset_id):
     return "http://image-net.org/download/synset?wnid={0}&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford" \
@@ -41,7 +42,8 @@ def get_metadata():
 
                 yield (animal, synset_id, animal_dir, images_dir, file_path, url)
 
-def process_animal(animal, synset_id, animal_dir, images_dir, file_path, url):
+def process_animal(tupple):
+    (animal, synset_id, animal_dir, images_dir, file_path, url) = tupple
     if len(os.listdir(images_dir)) == 0:
         print("{2}: Downloading {0} ({1}) ...".format(animal, synset_id, strftime("%Y-%m-%d %H:%M:%S", localtime())))
         download_file(url, file_path)
@@ -53,7 +55,7 @@ def process_animal(animal, synset_id, animal_dir, images_dir, file_path, url):
         os.remove(file_path)
 
 
-for (animal, synset_id, animal_dir, images_dir, file_path, url) in get_metadata():
-    process_animal(animal, synset_id, animal_dir, images_dir, file_path, url)
+pool = ThreadPool(4)
+pool.map(process_animal, get_metadata())
 
 
