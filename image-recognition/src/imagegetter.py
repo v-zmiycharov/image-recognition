@@ -21,31 +21,39 @@ def extract_tar_file(file_path):
             folder_path = os.path.dirname(file_path)
             tar.extractall(path=folder_path)
 
-with open(os.path.join(definitions.IMAGE_NET_DIR, "list.txt")) as list_file:
-    for line in list_file:
-        splitted = line.rstrip().split(" - ")
-        if len(splitted) == 2:
-            animal = splitted[0]
-            synset_id = splitted[1]
-            animal_dir = os.path.join(definitions.IMAGE_NET_DIR, animal)
-            print("{2}: {0} ({1}):".format(animal, synset_id, strftime("%Y-%m-%d %H:%M:%S", localtime())))
-            if not os.path.exists(animal_dir):
-                os.makedirs(animal_dir)
-            animal_dir = os.path.join(animal_dir, "images")
-            if not os.path.exists(animal_dir):
-                os.makedirs(animal_dir)
+def get_metadata():
+    with open(os.path.join(definitions.IMAGE_NET_DIR, "list.txt")) as list_file:
+        for line in list_file:
+            splitted = line.rstrip().split(" - ")
+            if len(splitted) == 2:
+                animal = splitted[0]
+                synset_id = splitted[1]
+                animal_dir = os.path.join(definitions.IMAGE_NET_DIR, animal)
+                print("{2}: {0} ({1}):".format(animal, synset_id, strftime("%Y-%m-%d %H:%M:%S", localtime())))
+                if not os.path.exists(animal_dir):
+                    os.makedirs(animal_dir)
+                images_dir = os.path.join(animal_dir, definitions.IMAGES_DIR_NAME)
+                if not os.path.exists(images_dir):
+                    os.makedirs(images_dir)
 
-            url = generate_download_url(synset_id)
-            file_path = os.path.join(animal_dir, synset_id + ".tar")
+                url = generate_download_url(synset_id)
+                file_path = os.path.join(images_dir, synset_id + ".tar")
 
-            if len(os.listdir(animal_dir)) == 0:
-                print("{2}: Downloading {0} ({1}) ...".format(animal, synset_id, strftime("%Y-%m-%d %H:%M:%S", localtime())))
-                download_file(url, file_path)
+                yield (animal, synset_id, animal_dir, images_dir, file_path, url)
 
-            if os.path.isfile(file_path):
-                print("{2}: Extracting {0} ({1}) ...".format(animal, synset_id, strftime("%Y-%m-%d %H:%M:%S", localtime())))
-                extract_tar_file(file_path)
-                print("{2}: Deleting {0} ({1}) ...".format(animal, synset_id, strftime("%Y-%m-%d %H:%M:%S", localtime())))
-                os.remove(file_path)
+def process_animal(animal, synset_id, animal_dir, images_dir, file_path, url):
+    if len(os.listdir(images_dir)) == 0:
+        print("{2}: Downloading {0} ({1}) ...".format(animal, synset_id, strftime("%Y-%m-%d %H:%M:%S", localtime())))
+        download_file(url, file_path)
+
+    if os.path.isfile(file_path):
+        print("{2}: Extracting {0} ({1}) ...".format(animal, synset_id, strftime("%Y-%m-%d %H:%M:%S", localtime())))
+        extract_tar_file(file_path)
+        print("{2}: Deleting {0} ({1}) ...".format(animal, synset_id, strftime("%Y-%m-%d %H:%M:%S", localtime())))
+        os.remove(file_path)
+
+
+for (animal, synset_id, animal_dir, images_dir, file_path, url) in get_metadata():
+    process_animal(animal, synset_id, animal_dir, images_dir, file_path, url)
 
 
