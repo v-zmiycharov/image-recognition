@@ -27,6 +27,7 @@ NUM_CLASSES = 2
 IMAGE_SIZE = 28
 CHANNELS = 3
 IMAGE_PIXELS = IMAGE_SIZE * IMAGE_SIZE * CHANNELS
+TRAIN_IMAGES_COUNT = 300
 
 
 
@@ -114,7 +115,7 @@ def do_eval(sess,
         (num_examples, true_count, precision))
 
 # Get the sets of images and labels for training, validation, and
-train_images, train_labels = utils.load_dataset(NUM_CLASSES, IMAGE_SIZE)
+train_images, train_labels = utils.load_dataset(NUM_CLASSES, IMAGE_SIZE, TRAIN_IMAGES_COUNT)
 train_images = train_images.reshape(4,IMAGE_PIXELS)
 
 '''
