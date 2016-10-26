@@ -115,6 +115,7 @@ def do_eval(sess,
 
 # Get the sets of images and labels for training, validation, and
 train_images, train_labels = utils.load_dataset(NUM_CLASSES, IMAGE_SIZE)
+train_images = train_images.reshape(4,IMAGE_PIXELS)
 
 '''
 train_images = []
