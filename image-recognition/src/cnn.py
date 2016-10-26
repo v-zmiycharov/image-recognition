@@ -4,67 +4,15 @@ import lasagne
 from lasagne import layers
 from lasagne.updates import nesterov_momentum
 from nolearn.lasagne import NeuralNet
-from PIL import Image
 import definitions
 from src.image_net import IMAGES
-from random import shuffle
+import src.utils as utils
 
 IMAGE_SIZE = 32
 TRAIN_IMAGES_COUNT = 300
-ALLOWED_LABELS_COUNT = 5
+NUM_CLASSES = 5
 
-def img_to_numpy(img_path):
-    pic = Image.open(img_path)
-    pic = pic.resize((IMAGE_SIZE,IMAGE_SIZE), Image.ANTIALIAS)
-    np_array = np.array(pic)
-    return np_array.reshape((3,IMAGE_SIZE,IMAGE_SIZE))
-
-def shuffle_dependent_lists(list1, list2):
-    list1_shuf = []
-    list2_shuf = []
-    index_shuf = list(range(len(list1)))
-    shuffle(index_shuf)
-    for i in index_shuf:
-        list1_shuf.append(list1[i])
-        list2_shuf.append(list2[i])
-
-    return (list1_shuf, list2_shuf)
-
-def load_dataset():
-    X_train = []
-    X_test = []
-    y_train = []
-    y_test = []
-
-    allowed_labels = IMAGES[:ALLOWED_LABELS_COUNT]
-
-    for label in allowed_labels:
-        train_dir = os.path.join(definitions.IMAGE_NET_DIR, label[1], definitions.IMAGES_DIR_NAME)
-        test_dir = os.path.join(definitions.IMAGE_NET_DIR, label[1], definitions.TEST_DIR_NAME)
-        for filename in os.listdir(train_dir)[:300]:
-            try:
-                image = img_to_numpy(os.path.join(train_dir, filename))
-            except ValueError as ve:
-                print(os.path.join(train_dir, filename))
-                continue
-
-            X_train.append(image)
-            y_train.append(label[0])
-        for filename in os.listdir(test_dir):
-            try:
-                image = img_to_numpy(os.path.join(test_dir, filename))
-            except ValueError as ve:
-                print(os.path.join(test_dir, filename))
-                continue
-
-            X_test.append(image)
-            y_test.append(label[0])
-
-    (X_train, y_train) = shuffle_dependent_lists(X_train, y_train)
-
-    return np.array(X_train), np.array(y_train), np.array(X_test), np.array(y_test)
-
-X_train, y_train, X_test, y_test = load_dataset()
+X_train, y_train = utils.load_dataset(NUM_CLASSES, IMAGE_SIZE, TRAIN_IMAGES_COUNT, is_reshape=True)
 
 net1 = NeuralNet(
     layers=[('input', layers.InputLayer),
@@ -101,7 +49,7 @@ net1 = NeuralNet(
     dropout2_p=0.5,
     # output
     output_nonlinearity=lasagne.nonlinearities.softmax,
-    output_num_units=ALLOWED_LABELS_COUNT,
+    output_num_units=NUM_CLASSES,
     # optimization method params
     update=nesterov_momentum,
     update_learning_rate=0.01,
@@ -112,6 +60,8 @@ net1 = NeuralNet(
 # Train the network
 print("Start train")
 nn = net1.fit(X_train, y_train)
+
+X_test, y_test = utils.load_dataset(NUM_CLASSES, IMAGE_SIZE, is_train=False, is_reshape=True)
 
 print("Predict")
 preds = net1.predict(X_test)
