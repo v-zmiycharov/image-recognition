@@ -9,6 +9,7 @@ import numpy as np
 import random
 from PIL import Image
 import tensorflow as tf
+import src.utils as utils
 
 # Basic model parameters as external flags.
 flags = tf.app.flags
@@ -113,6 +114,9 @@ def do_eval(sess,
         (num_examples, true_count, precision))
 
 # Get the sets of images and labels for training, validation, and
+train_images, train_labels = utils.load_dataset(NUM_CLASSES, IMAGE_SIZE)
+
+'''
 train_images = []
 for filename in ['01.jpg', '02.jpg', '03.jpg', '04.jpg']:
   image = Image.open(filename)
@@ -124,6 +128,7 @@ train_images = train_images.reshape(4,IMAGE_PIXELS)
 
 label = [0,1,1,1]
 train_labels = np.array(label)
+'''
 
 def run_training():
   # Tell TensorFlow that the model will be built into the default Graph.

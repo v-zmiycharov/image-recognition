@@ -27,7 +27,7 @@ def shuffle_dependent_lists(list1, list2):
     return (list1_shuf, list2_shuf)
 
 
-def load_dataset(num_classes, image_size, images_count = -1, image_pixels = None, is_train = True, is_reshape = False):
+def load_dataset(num_classes, image_size, images_count = 0, is_train = True, is_reshape = False):
     dir_name = definitions.IMAGES_DIR_NAME if is_train else definitions.TEST_DIR_NAME
     X_data = []
     y_data = []
@@ -36,7 +36,11 @@ def load_dataset(num_classes, image_size, images_count = -1, image_pixels = None
 
     for label in allowed_labels:
         full_dir_path = os.path.join(definitions.IMAGE_NET_DIR, label[1], dir_name)
-        for filename in os.listdir(full_dir_path)[:images_count]:
+        files = os.listdir(full_dir_path)
+        if images_count > 0:
+            files = files[:images_count]
+
+        for filename in files:
             try:
                 image = img_to_numpy(os.path.join(full_dir_path, filename), image_size, is_reshape)
             except ValueError as ve:
@@ -48,9 +52,6 @@ def load_dataset(num_classes, image_size, images_count = -1, image_pixels = None
 
     if is_train:
         (X_data, y_data) = shuffle_dependent_lists(X_data, y_data)
-
-    if not image_pixels is None:
-        X_data = X_data.reshape(4, image_pixels)
 
     return np.array(X_data), np.array(y_data)
 
