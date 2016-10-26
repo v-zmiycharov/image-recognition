@@ -7,9 +7,7 @@ from nolearn.lasagne import NeuralNet
 from PIL import Image
 import definitions
 from src.image_net import IMAGES
-
-import matplotlib.pyplot as plt
-from sklearn.metrics import confusion_matrix
+from random import shuffle
 
 IMAGE_SIZE = 28
 
@@ -18,6 +16,17 @@ def img_to_numpy(img_path):
     pic = pic.resize((IMAGE_SIZE,IMAGE_SIZE), Image.ANTIALIAS)
     np_array = np.array(pic)
     return np_array.reshape((3,IMAGE_SIZE,IMAGE_SIZE))
+
+def shuffle_dependent_lists(list1, list2):
+    list1_shuf = []
+    list2_shuf = []
+    index_shuf = list(range(len(list1)))
+    shuffle(index_shuf)
+    for i in index_shuf:
+        list1_shuf.append(list1[i])
+        list2_shuf.append(list2[i])
+
+    return (list1_shuf, list2_shuf)
 
 def load_dataset():
     X_train = []
@@ -48,6 +57,8 @@ def load_dataset():
 
             X_test.append(image)
             y_test.append(label[0])
+
+    (X_train, y_train) = shuffle_dependent_lists(X_train, y_train)
 
     return np.array(X_train), np.array(y_train), np.array(X_test), np.array(y_test)
 
@@ -103,6 +114,10 @@ nn = net1.fit(X_train, y_train)
 print("Predict")
 preds = net1.predict(X_test)
 
+for result in zip(y_test, preds):
+    print(result)
+
+'''
 print("Print results:")
 cm = confusion_matrix(y_test, preds)
 plt.matshow(cm)
@@ -110,4 +125,6 @@ plt.title('Confusion matrix')
 plt.colorbar()
 plt.ylabel('True label')
 plt.xlabel('Predicted label')
+plt.interactive(False)
 plt.show()
+'''
