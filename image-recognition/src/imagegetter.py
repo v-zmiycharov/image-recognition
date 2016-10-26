@@ -5,7 +5,7 @@ from time import localtime, strftime
 import tarfile
 from multiprocessing.dummy import Pool as ThreadPool
 import random
-import ntpath
+from src.image_net import IMAGES
 
 def generate_download_url(synset_id):
     return "http://image-net.org/download/synset?wnid={0}&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford" \
@@ -34,29 +34,26 @@ def create_test_set(images_dir, test_dir):
 
 
 def get_metadata():
-    with open(os.path.join(definitions.IMAGE_NET_DIR, "list.txt")) as list_file:
-        for line in list_file:
-            splitted = line.rstrip().split(" - ")
-            if len(splitted) == 2:
-                animal = splitted[0]
-                synset_id = splitted[1]
-                animal_dir = os.path.join(definitions.IMAGE_NET_DIR, animal)
-                print("{2}: {0} ({1}):".format(animal, synset_id, strftime("%Y-%m-%d %H:%M:%S", localtime())))
-                if not os.path.exists(animal_dir):
-                    os.makedirs(animal_dir)
-                images_dir = os.path.join(animal_dir, definitions.IMAGES_DIR_NAME)
-                if not os.path.exists(images_dir):
-                    os.makedirs(images_dir)
+    for label in IMAGES:
+        animal = label[1]
+        synset_id = label[2]
+        animal_dir = os.path.join(definitions.IMAGE_NET_DIR, animal)
+        print("{2}: {0} ({1}):".format(animal, synset_id, strftime("%Y-%m-%d %H:%M:%S", localtime())))
+        if not os.path.exists(animal_dir):
+            os.makedirs(animal_dir)
+        images_dir = os.path.join(animal_dir, definitions.IMAGES_DIR_NAME)
+        if not os.path.exists(images_dir):
+            os.makedirs(images_dir)
 
-                test_dir = os.path.join(animal_dir, definitions.TEST_DIR_NAME)
-                if not os.path.exists(test_dir):
-                    os.makedirs(test_dir)
+        test_dir = os.path.join(animal_dir, definitions.TEST_DIR_NAME)
+        if not os.path.exists(test_dir):
+            os.makedirs(test_dir)
 
-                url = generate_download_url(synset_id)
-                file_name = synset_id + ".tar"
-                file_path = os.path.join(images_dir, file_name)
+        url = generate_download_url(synset_id)
+        file_name = synset_id + ".tar"
+        file_path = os.path.join(images_dir, file_name)
 
-                yield (animal, synset_id, animal_dir, images_dir, test_dir, file_name, file_path, url)
+        yield (animal, synset_id, animal_dir, images_dir, test_dir, file_name, file_path, url)
 
 def process_animal(tupple):
     (animal, synset_id, animal_dir, images_dir, test_dir, file_name, file_path, url) = tupple
