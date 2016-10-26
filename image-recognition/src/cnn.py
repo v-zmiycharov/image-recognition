@@ -9,7 +9,9 @@ import definitions
 from src.image_net import IMAGES
 from random import shuffle
 
-IMAGE_SIZE = 28
+IMAGE_SIZE = 32
+TRAIN_IMAGES_COUNT = 300
+ALLOWED_LABELS_COUNT = 5
 
 def img_to_numpy(img_path):
     pic = Image.open(img_path)
@@ -34,12 +36,12 @@ def load_dataset():
     y_train = []
     y_test = []
 
-    allowed_labels = IMAGES[:2]
+    allowed_labels = IMAGES[:ALLOWED_LABELS_COUNT]
 
     for label in allowed_labels:
         train_dir = os.path.join(definitions.IMAGE_NET_DIR, label[1], definitions.IMAGES_DIR_NAME)
         test_dir = os.path.join(definitions.IMAGE_NET_DIR, label[1], definitions.TEST_DIR_NAME)
-        for filename in os.listdir(train_dir):
+        for filename in os.listdir(train_dir)[:300]:
             try:
                 image = img_to_numpy(os.path.join(train_dir, filename))
             except ValueError as ve:
@@ -99,7 +101,7 @@ net1 = NeuralNet(
     dropout2_p=0.5,
     # output
     output_nonlinearity=lasagne.nonlinearities.softmax,
-    output_num_units=10,
+    output_num_units=ALLOWED_LABELS_COUNT,
     # optimization method params
     update=nesterov_momentum,
     update_learning_rate=0.01,
