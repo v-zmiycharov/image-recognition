@@ -1,13 +1,5 @@
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 import time
 import math
-import numpy
-import numpy as np
-import random
-from PIL import Image
 import tensorflow as tf
 import src.utils as utils
 
