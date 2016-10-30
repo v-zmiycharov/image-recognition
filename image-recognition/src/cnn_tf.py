@@ -3,6 +3,18 @@ import math
 import tensorflow as tf
 import src.utils as utils
 
+NUM_CLASSES = 2
+IMAGE_SIZE = 28
+CHANNELS = 3
+IMAGE_PIXELS = IMAGE_SIZE * IMAGE_SIZE * CHANNELS
+LABEL_IMAGES_COUNT = 0 # 0 for no restrictions
+
+# Get the sets of images and labels for training, validation, and
+train_images, train_labels = utils.load_dataset(NUM_CLASSES, IMAGE_SIZE, LABEL_IMAGES_COUNT, is_reshape=True)
+BATCH_SIZE = len(train_images)
+train_images = train_images.reshape(BATCH_SIZE,IMAGE_PIXELS)
+
+
 # Basic model parameters as external flags.
 flags = tf.app.flags
 FLAGS = flags.FLAGS
@@ -10,16 +22,11 @@ flags.DEFINE_float('learning_rate', 0.01, 'Initial learning rate.')
 flags.DEFINE_integer('max_steps', 2000, 'Number of steps to run trainer.')
 flags.DEFINE_integer('hidden1', 128, 'Number of units in hidden layer 1.')
 flags.DEFINE_integer('hidden2', 32, 'Number of units in hidden layer 2.')
-flags.DEFINE_integer('batch_size', 4, 'Batch size.  '
+flags.DEFINE_integer('batch_size', BATCH_SIZE, 'Batch size.  '
                      'Must divide evenly into the dataset sizes.')
 flags.DEFINE_string('train_dir', 'data', 'Directory to put the training data.')
 flags.DEFINE_boolean('fake_data', False, 'If true, uses fake data '
                      'for unit testing.')
-NUM_CLASSES = 2
-IMAGE_SIZE = 28
-CHANNELS = 3
-IMAGE_PIXELS = IMAGE_SIZE * IMAGE_SIZE * CHANNELS
-TRAIN_IMAGES_COUNT = 300
 
 
 
@@ -95,7 +102,7 @@ def do_eval(sess,
             data_set):
   # And run one epoch of eval.
   true_count = 0  # Counts the number of correct predictions.
-  steps_per_epoch = 4 // FLAGS.batch_size
+  steps_per_epoch = BATCH_SIZE // FLAGS.batch_size
   num_examples = steps_per_epoch * FLAGS.batch_size
   for step in range(steps_per_epoch):
     feed_dict = fill_feed_dict(train_images,train_labels,
@@ -106,29 +113,11 @@ def do_eval(sess,
   print('  Num examples: %d  Num correct: %d  Precision @ 1: %0.04f' %
         (num_examples, true_count, precision))
 
-# Get the sets of images and labels for training, validation, and
-train_images, train_labels = utils.load_dataset(NUM_CLASSES, IMAGE_SIZE, TRAIN_IMAGES_COUNT)
-train_images = train_images.reshape(4,IMAGE_PIXELS)
-
-'''
-train_images = []
-for filename in ['01.jpg', '02.jpg', '03.jpg', '04.jpg']:
-  image = Image.open(filename)
-  image = image.resize((IMAGE_SIZE,IMAGE_SIZE))
-  train_images.append(np.array(image))
-
-train_images = np.array(train_images)
-train_images = train_images.reshape(4,IMAGE_PIXELS)
-
-label = [0,1,1,1]
-train_labels = np.array(label)
-'''
-
 def run_training():
   # Tell TensorFlow that the model will be built into the default Graph.
   with tf.Graph().as_default():
     # Generate placeholders for the images and labels.
-    images_placeholder, labels_placeholder = placeholder_inputs(4)
+    images_placeholder, labels_placeholder = placeholder_inputs(BATCH_SIZE)
 
     # Build a Graph that computes predictions from the inference model.
     logits = inference(images_placeholder,
