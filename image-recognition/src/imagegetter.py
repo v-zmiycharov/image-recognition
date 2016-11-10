@@ -72,8 +72,9 @@ def process_animal(tupple):
         create_test_set(images_dir, test_dir)
 
 
-pool = ThreadPool(4)
-pool.map(process_animal, get_metadata())
+if __name__ == '__main__':
+    pool = ThreadPool(4)
+    pool.map(process_animal, get_metadata())
 
 
 
