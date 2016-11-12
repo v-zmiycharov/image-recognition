@@ -44,7 +44,7 @@ import tarfile
 import urllib
 import tensorflow as tf
 
-from tensorflow.models.image.cifar10 import cifar10_input
+from cifar import cifar10_input
 import definitions
 
 FLAGS = tf.app.flags.FLAGS
