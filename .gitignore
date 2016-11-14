@@ -1,1 +1,4 @@
 _DATA/ImageNet/*/**
+_BOUNDING_BOXES/**
+_TEST_DATA/**
+image-recognition/tmp/**
