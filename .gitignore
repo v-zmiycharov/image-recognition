@@ -1,5 +1,5 @@
 _DATA/ImageNet/*/**
 _BOUNDING_BOXES/**
 _TEST_DATA/**
-_BIN_OUTPUT/**
+_CUSTOM/**
 image-recognition/tmp/**

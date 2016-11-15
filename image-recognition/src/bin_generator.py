@@ -23,7 +23,7 @@ def save_np_to_file(np_array, batch_number = 0, is_train = True):
     if not is_train:
         file_name = 'test_batch.bin'
 
-    file_path = os.path.join(definitions.BIN_OUTPUT_DIR, file_name)
+    file_path = os.path.join(definitions.BIN_DATA_DIR, file_name)
     np_array.tofile(file_path)
 
 def img_to_list(img_path, image_size, label):
@@ -64,16 +64,23 @@ def load_dataset(num_classes, image_size, images_count = 0, is_train = True):
     batches_count = num_classes if is_train else 1
     items_in_batch = len(result_list) // batches_count
 
-    batch_number = 1
+    batch_number = 0
 
     for chunk in chunks(result_list, items_in_batch):
+        batch_number += 1
+        print("Generate {0} batch #{1}".format("train" if is_train else "test", batch_number))
         concatenated = [inner for outer in chunk for inner in outer]
         np_array = np.array(concatenated,np.uint8)
         save_np_to_file(np_array, batch_number, is_train)
-        batch_number += 1
+
+    if is_train:
+        print(str(batch_number) + " batches")
+        print(str(len(result_list)) + " train items")
+    else:
+        print(str(len(result_list)) + " test items")
 
 if __name__ == '__main__':
-    clear_dir(definitions.BIN_OUTPUT_DIR)
-    load_dataset(3, 32, 500)
-    load_dataset(3, 32, is_train = False)
+    clear_dir(definitions.BIN_DATA_DIR)
+    load_dataset(10, 32)
+    load_dataset(10, 32, is_train = False)
 
