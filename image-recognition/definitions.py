@@ -6,3 +6,4 @@ TEST_DATA_DIR = os.path.join(ROOT_DIR, os.pardir, "_TEST_DATA")
 IMAGE_NET_DIR = os.path.join(DATA_DIR, "ImageNet")
 IMAGES_DIR_NAME = "images"
 TEST_DIR_NAME = "test"
+BIN_OUTPUT_DIR = os.path.join(ROOT_DIR, os.pardir, "_BIN_OUTPUT")
