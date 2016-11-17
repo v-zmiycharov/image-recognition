@@ -48,7 +48,7 @@ from cifar import cifar10_custom
 
 FLAGS = tf.app.flags.FLAGS
 
-tf.app.flags.DEFINE_string('train_dir', os.path.join(definitions.ROOT_DIR,'tmp/cifar10_train'),
+tf.app.flags.DEFINE_string('train_dir', os.path.join(definitions.ROOT_DIR,'cifar/tmp/cifar10_train'),
                            """Directory where to write event logs """
                            """and checkpoint.""")
 tf.app.flags.DEFINE_integer('max_steps', 2000,

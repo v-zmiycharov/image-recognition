@@ -23,21 +23,13 @@ tf.app.flags.DEFINE_string('checkpoint_dir', os.path.join(definitions.CUSTOM_DIR
                            """Directory where to read model checkpoints.""")
 tf.app.flags.DEFINE_integer('eval_interval_secs', 60 * 5,
                             """How often to run the eval.""")
-tf.app.flags.DEFINE_integer('num_examples', 10000,
+tf.app.flags.DEFINE_integer('num_examples', 739,
                             """Number of examples to run.""")
-tf.app.flags.DEFINE_boolean('run_once', False,
+tf.app.flags.DEFINE_boolean('run_once', True,
                          """Whether to run eval only once.""")
 
 
 def eval_once(saver, summary_writer, top_k_op, summary_op):
-  """Run Eval once.
-
-  Args:
-    saver: Saver.
-    summary_writer: Summary writer.
-    top_k_op: Top K op.
-    summary_op: Summary op.
-  """
   with tf.Session() as sess:
     ckpt = tf.train.get_checkpoint_state(FLAGS.checkpoint_dir)
     if ckpt and ckpt.model_checkpoint_path:
