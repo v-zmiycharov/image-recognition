@@ -1,10 +1,11 @@
+import os
 from random import shuffle
 
-from PIL import Image
 import numpy as np
-from src.image_net import IMAGES
-import os
+from PIL import Image
+
 import definitions
+from data.imagenet_metadata import IMAGES
 
 def clear_dir(dir_path):
     for file in os.listdir(dir_path):

@@ -2,17 +2,13 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-import gzip
 import os
 import re
-import sys
-import tarfile
 
-import urllib
 import tensorflow as tf
 
-from custom_tf import tf_input
 import definitions
+from tf_cnn import tf_input
 
 FLAGS = tf.app.flags.FLAGS
 
@@ -69,7 +65,7 @@ def distorted_inputs():
     raise ValueError('Please supply a data_dir')
   data_dir = FLAGS.data_dir
   images, labels = tf_input.distorted_inputs(data_dir=data_dir,
-                                                  batch_size=FLAGS.batch_size)
+                                             batch_size=FLAGS.batch_size)
   if FLAGS.use_fp16:
     images = tf.cast(images, tf.float16)
     labels = tf.cast(labels, tf.float16)
@@ -81,8 +77,8 @@ def inputs(eval_data):
     raise ValueError('Please supply a data_dir')
   data_dir = FLAGS.data_dir
   images, labels = tf_input.inputs(eval_data=eval_data,
-                                        data_dir=data_dir,
-                                        batch_size=FLAGS.batch_size)
+                                   data_dir=data_dir,
+                                   batch_size=FLAGS.batch_size)
   if FLAGS.use_fp16:
     images = tf.cast(images, tf.float16)
     labels = tf.cast(labels, tf.float16)

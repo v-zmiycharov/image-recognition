@@ -1,9 +1,12 @@
-from PIL import Image
-import numpy as np
-from random import shuffle
-from src.image_net import IMAGES
 import os
+from random import shuffle
+
+import numpy as np
+from PIL import Image
+
 import definitions
+from data.imagenet_metadata import IMAGES
+
 
 def img_to_numpy(img_path, image_size, is_reshape = False):
     pic = Image.open(img_path)

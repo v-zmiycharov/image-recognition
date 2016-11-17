@@ -1,11 +1,14 @@
-import definitions
 import os
-import requests
-from time import localtime, strftime
+import random
 import tarfile
 from multiprocessing.dummy import Pool as ThreadPool
-import random
-from src.image_net import IMAGES
+from time import localtime, strftime
+
+import requests
+
+import definitions
+from data.imagenet_metadata import IMAGES
+
 
 def generate_download_url(synset_id):
     return "http://image-net.org/download/synset?wnid={0}&username=vzmiycharov&accesskey=9fbd7b85ed46b46b2aed80e6335ac9ee5f5b9463&release=latest&src=stanford" \

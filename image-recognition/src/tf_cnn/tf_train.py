@@ -2,15 +2,15 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-from datetime import datetime
 import os.path
 import time
-import definitions
+from datetime import datetime
 
 import numpy as np
 import tensorflow as tf
 
-from custom_tf import tf_custom
+import definitions
+from tf_cnn import tf_custom
 
 FLAGS = tf.app.flags.FLAGS
 
