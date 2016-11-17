@@ -1,5 +1,3 @@
 _DATA/ImageNet/*/**
-_BOUNDING_BOXES/**
-_TEST_DATA/**
 _CUSTOM/**
-image-recognition/cifar/tmp/**
+image-recognition/common/cifar/tmp/**
