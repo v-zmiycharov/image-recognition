@@ -4,6 +4,7 @@ from random import shuffle
 import numpy as np
 from PIL import Image
 
+import config
 import definitions
 from data.imagenet_metadata import IMAGES
 
@@ -89,6 +90,6 @@ def load_dataset(num_classes, image_size, images_count = 0, is_train = True):
 
 if __name__ == '__main__':
     clear_dir(definitions.BIN_DATA_DIR)
-    load_dataset(10, 32)
-    load_dataset(10, 32, is_train = False)
+    load_dataset(config.NUM_CLASSES, config.IMAGE_SIZE)
+    load_dataset(config.NUM_CLASSES, config.IMAGE_SIZE, is_train = False)
 

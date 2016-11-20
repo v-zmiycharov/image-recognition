@@ -1,5 +1,4 @@
 import numpy as np
-from keras.datasets import cifar10
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Dropout
@@ -9,6 +8,8 @@ from keras.optimizers import SGD
 from keras.layers.convolutional import Convolution2D
 from keras.layers.convolutional import MaxPooling2D
 from keras.utils import np_utils
+
+import config
 from keras import backend as K
 import definitions
 import os
@@ -17,9 +18,6 @@ K.set_image_dim_ordering('th')
 
 TRAIN_SAMPLES = 14169
 TEST_SAMPLES = 739
-NUM_CLASSES = 10
-IMAGE_SIZE = 32
-IMAGE_DEPTH = 3
 BATCH_COUNT = 11
 
 def images_per_batch(batch_index):
@@ -42,7 +40,7 @@ def load_batch(fpath):
 def load_data():
     path = definitions.BIN_DATA_DIR
 
-    X_train = np.zeros((TRAIN_SAMPLES, 3, IMAGE_SIZE, IMAGE_SIZE), dtype="uint8")
+    X_train = np.zeros((TRAIN_SAMPLES, 3, config.IMAGE_SIZE, config.IMAGE_SIZE), dtype="uint8")
     y_train = np.zeros((TRAIN_SAMPLES,), dtype="uint8")
 
     total_size = 0
