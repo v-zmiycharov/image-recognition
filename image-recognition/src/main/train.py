@@ -48,7 +48,7 @@ def load_batch(fpath):
 def load_data():
     path = definitions.BIN_DATA_DIR
 
-    X_train = np.zeros((TRAIN_SAMPLES, 3, config.IMAGE_SIZE, config.IMAGE_SIZE), dtype="uint8")
+    X_train = np.zeros((TRAIN_SAMPLES, config.IMAGE_DEPTH, config.IMAGE_SIZE, config.IMAGE_SIZE), dtype="uint8")
     y_train = np.zeros((TRAIN_SAMPLES,), dtype="uint8")
 
     total_size = 0
@@ -93,7 +93,7 @@ def train():
 
     # Create the model
     model = Sequential()
-    model.add(Convolution2D(32, 3, 3, input_shape=(3, 32, 32), border_mode='same', activation='relu',
+    model.add(Convolution2D(32, 3, 3, input_shape=(3, config.IMAGE_SIZE, config.IMAGE_SIZE), border_mode='same', activation='relu',
                             W_constraint=maxnorm(3)))
     model.add(Dropout(0.2))
     model.add(Convolution2D(32, 3, 3, activation='relu', border_mode='same', W_constraint=maxnorm(3)))
@@ -103,15 +103,13 @@ def train():
     model.add(Dropout(0.5))
     model.add(Dense(num_classes, activation='softmax'))
     # Compile model
-    epochs = 25
-    lrate = 0.01
-    decay = lrate / epochs
-    sgd = SGD(lr=lrate, momentum=0.9, decay=decay, nesterov=False)
+    decay = config.LEARN_RATE / config.EPOCHS
+    sgd = SGD(lr=config.LEARN_RATE, momentum=config.MOMENTUM, decay=decay, nesterov=False)
     model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
     print(model.summary())
 
     # Fit the model
-    model.fit(X_train, y_train, validation_data=(X_test, y_test), nb_epoch=epochs, batch_size=32)
+    model.fit(X_train, y_train, validation_data=(X_test, y_test), nb_epoch=config.EPOCHS, batch_size=config.BATCH_SIZE)
     # Final evaluation of the model
     scores = model.evaluate(X_test, y_test, verbose=0)
     print("Accuracy: %.2f%%" % (scores[1] * 100))
