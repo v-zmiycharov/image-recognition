@@ -7,10 +7,9 @@ import os
 import time
 from datetime import datetime
 
+import definitions
 import numpy as np
 import tensorflow as tf
-
-import definitions
 from tf_cnn import tf_custom
 
 FLAGS = tf.app.flags.FLAGS

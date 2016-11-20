@@ -5,9 +5,8 @@ from __future__ import print_function
 import os
 import re
 
-import tensorflow as tf
-
 import definitions
+import tensorflow as tf
 from tf_cnn import tf_input
 
 FLAGS = tf.app.flags.FLAGS
