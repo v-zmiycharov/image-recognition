@@ -88,8 +88,16 @@ def load_dataset(num_classes, image_size, images_count = 0, is_train = True):
     else:
         print(str(len(result_list)) + " test items")
 
+    return batch_number, len(result_list)
+
 if __name__ == '__main__':
     clear_dir(definitions.BIN_DATA_DIR)
-    load_dataset(config.NUM_CLASSES, config.IMAGE_SIZE)
-    load_dataset(config.NUM_CLASSES, config.IMAGE_SIZE, is_train = False)
+    batch_count, train_items = load_dataset(config.NUM_CLASSES, config.IMAGE_SIZE)
+    temp, test_items = load_dataset(config.NUM_CLASSES, config.IMAGE_SIZE, is_train = False)
+
+    pickle.dump(
+        (train_items, test_items, batch_count)
+        , open(os.path.join(definitions.BIN_DATA_DIR, '_metadata.bin'), 'wb'))
+
+
 

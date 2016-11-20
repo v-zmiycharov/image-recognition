@@ -16,9 +16,17 @@ import os
 import pickle
 K.set_image_dim_ordering('th')
 
-TRAIN_SAMPLES = 14169
-TEST_SAMPLES = 739
-BATCH_COUNT = 11
+TRAIN_SAMPLES = 0
+TEST_SAMPLES = 0
+BATCH_COUNT = 0
+
+def load_globals():
+    global TRAIN_SAMPLES
+    global TEST_SAMPLES
+    global BATCH_COUNT
+
+    TRAIN_SAMPLES, TEST_SAMPLES, BATCH_COUNT \
+        = pickle.load(open(os.path.join(definitions.BIN_DATA_DIR, '_metadata.bin'), 'rb'))
 
 def images_per_batch(batch_index):
     if batch_index == BATCH_COUNT:
@@ -64,7 +72,7 @@ def load_data():
 
     return (X_train, y_train), (np.array(X_test), np.array(y_test))
 
-if __name__ == '__main__':
+def train():
     # fix random seed for reproducibility
     seed = 7
     np.random.seed(seed)
@@ -110,3 +118,8 @@ if __name__ == '__main__':
 
     print("Saving model ...")
     model.save(os.path.join(definitions.MODEL_DATA_DIR, "keras_model.txt"))
+
+
+if __name__ == '__main__':
+    load_globals()
+    train()
