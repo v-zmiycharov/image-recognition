@@ -39,7 +39,14 @@ def img_to_list(img_path, image_size, label):
     g = pic[:, :, 1].flatten()
     b = pic[:, :, 2].flatten()
 
-    return (label, tuple(r), tuple(g), tuple(b))
+    return (
+        np.array([label]),
+        np.array([
+            np.reshape(tuple(r), (image_size, image_size)),
+            np.reshape(tuple(g), (image_size, image_size)),
+            np.reshape(tuple(b), (image_size, image_size))
+        ])
+    )
 
 
 def load_dataset(num_classes, image_size, images_count = 0, is_train = True):

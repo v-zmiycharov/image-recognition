@@ -12,7 +12,6 @@ from keras.utils import np_utils
 from keras import backend as K
 import definitions
 import os
-import sys
 import pickle
 K.set_image_dim_ordering('th')
 
@@ -35,17 +34,8 @@ def load_batch(fpath):
     images = pickle.load(open(fpath, 'rb'))
 
     for img in images:
-        img_label = img[0]
-        img_red_tuple = np.reshape(img[1], (IMAGE_SIZE, IMAGE_SIZE))
-        img_green_tuple = np.reshape(img[2], (IMAGE_SIZE, IMAGE_SIZE))
-        img_blue_tuple = np.reshape(img[3], (IMAGE_SIZE, IMAGE_SIZE))
-
-        labels.append(np.array([img_label]))
-        data.append(np.array([
-            img_red_tuple,
-            img_green_tuple,
-            img_blue_tuple
-        ]))
+        labels.append(img[0])
+        data.append(img[1])
 
     return data, labels
 
