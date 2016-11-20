@@ -30,7 +30,8 @@ def save_np_to_file(chunk, batch_number = 0, is_train = True):
     file_path = os.path.join(definitions.BIN_DATA_DIR, file_name)
     pickle.dump(chunk, open(file_path, 'wb'))
 
-def img_to_list(img_path, image_size, label):
+
+def img_to_np(img_path, image_size):
     pic = Image.open(img_path)
     pic = pic.resize((image_size,image_size), Image.ANTIALIAS)
 
@@ -40,13 +41,17 @@ def img_to_list(img_path, image_size, label):
     g = pic[:, :, 1].flatten()
     b = pic[:, :, 2].flatten()
 
-    return (
-        np.array([label]),
-        np.array([
+    return np.array([
             np.reshape(tuple(r), (image_size, image_size)),
             np.reshape(tuple(g), (image_size, image_size)),
             np.reshape(tuple(b), (image_size, image_size))
         ])
+
+
+def img_to_list(img_path, image_size, label):
+    return (
+        np.array([label]),
+        img_to_np(img_path, image_size)
     )
 
 
