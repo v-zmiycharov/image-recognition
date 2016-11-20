@@ -7,6 +7,8 @@ from PIL import Image
 import definitions
 from data.imagenet_metadata import IMAGES
 
+import pickle
+
 def clear_dir(dir_path):
     for file in os.listdir(dir_path):
         path = os.path.join(dir_path, file)
@@ -18,14 +20,14 @@ def chunks(l, n):
     for i in range(0, len(l), n):
         yield l[i:i + n]
 
-def save_np_to_file(np_array, batch_number = 0, is_train = True):
+def save_np_to_file(chunk, batch_number = 0, is_train = True):
     file_name = 'data_batch_{0}.bin'.format(batch_number)
 
     if not is_train:
         file_name = 'test_batch.bin'
 
     file_path = os.path.join(definitions.BIN_DATA_DIR, file_name)
-    np_array.tofile(file_path)
+    pickle.dump(chunk, open(file_path, 'wb'))
 
 def img_to_list(img_path, image_size, label):
     pic = Image.open(img_path)
@@ -36,9 +38,9 @@ def img_to_list(img_path, image_size, label):
     r = pic[:, :, 0].flatten()
     g = pic[:, :, 1].flatten()
     b = pic[:, :, 2].flatten()
-    label_list = [label]
 
-    return list(label_list) + list(r) + list(g) + list(b)
+    return (label, tuple(r), tuple(g), tuple(b))
+
 
 def load_dataset(num_classes, image_size, images_count = 0, is_train = True):
     dir_name = definitions.IMAGES_DIR_NAME if is_train else definitions.TEST_DIR_NAME
@@ -70,9 +72,7 @@ def load_dataset(num_classes, image_size, images_count = 0, is_train = True):
     for chunk in chunks(result_list, items_in_batch):
         batch_number += 1
         print("Generate {0} batch #{1}".format("train" if is_train else "test", batch_number))
-        concatenated = [inner for outer in chunk for inner in outer]
-        np_array = np.array(concatenated,np.uint8)
-        save_np_to_file(np_array, batch_number, is_train)
+        save_np_to_file(chunk, batch_number, is_train)
 
     if is_train:
         print(str(batch_number) + " batches")

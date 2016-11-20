@@ -1,5 +1,4 @@
-# Simple CNN model for CIFAR-10
-import numpy
+import numpy as np
 from keras.datasets import cifar10
 from keras.models import Sequential
 from keras.layers import Dense
@@ -11,16 +10,79 @@ from keras.layers.convolutional import Convolution2D
 from keras.layers.convolutional import MaxPooling2D
 from keras.utils import np_utils
 from keras import backend as K
+import definitions
+import os
+import sys
+import pickle
 K.set_image_dim_ordering('th')
 
+TRAIN_SAMPLES = 14169
+TEST_SAMPLES = 739
+NUM_CLASSES = 10
+IMAGE_SIZE = 32
+IMAGE_DEPTH = 3
+BATCH_COUNT = 11
+
+def images_per_batch(batch_index):
+    if batch_index == BATCH_COUNT:
+        return
+
+
+def load_batch(fpath):
+    labels = []
+    data = []
+
+    images = pickle.load(open(fpath, 'rb'))
+
+    for img in images:
+        img_label = img[0]
+        img_red_tuple = np.reshape(img[1], (IMAGE_SIZE, IMAGE_SIZE))
+        img_green_tuple = np.reshape(img[2], (IMAGE_SIZE, IMAGE_SIZE))
+        img_blue_tuple = np.reshape(img[3], (IMAGE_SIZE, IMAGE_SIZE))
+
+        labels.append(np.array([img_label]))
+        data.append(np.array([
+            img_red_tuple,
+            img_green_tuple,
+            img_blue_tuple
+        ]))
+
+    return data, labels
+
+def load_data():
+    path = definitions.BIN_DATA_DIR
+
+    X_train = np.zeros((TRAIN_SAMPLES, 3, IMAGE_SIZE, IMAGE_SIZE), dtype="uint8")
+    y_train = np.zeros((TRAIN_SAMPLES,), dtype="uint8")
+
+    total_size = 0
+    for i in range(1, BATCH_COUNT):
+        fpath = os.path.join(path, 'data_batch_%d.bin' % i)
+        data, labels = load_batch(fpath)
+        batch_size = len(labels)
+        X_train[total_size: total_size + batch_size, :, :, :] = data
+        y_train[total_size: total_size + batch_size] = labels
+        total_size += batch_size
+
+    fpath = os.path.join(path, 'test_batch.bin')
+    X_test, y_test = load_batch(fpath)
+
+    y_train = np.reshape(y_train, (len(y_train), 1))
+    y_test = np.reshape(y_test, (len(y_test), 1))
+
+    if K.image_dim_ordering() == 'tf':
+        X_train = X_train.transpose(0, 2, 3, 1)
+        X_test = X_test.transpose(0, 2, 3, 1)
+
+    return (X_train, y_train), (np.array(X_test), np.array(y_test))
 
 if __name__ == '__main__':
     # fix random seed for reproducibility
     seed = 7
-    numpy.random.seed(seed)
+    np.random.seed(seed)
 
     # load data
-    (X_train, y_train), (X_test, y_test) = cifar10.load_data()
+    (X_train, y_train), (X_test, y_test) = load_data()
 
     # normalize inputs from 0-255 to 0.0-1.0
     X_train = X_train.astype('float32')
