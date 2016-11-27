@@ -115,7 +115,14 @@ def train():
     print("Accuracy: %.2f%%" % (scores[1] * 100))
 
     print("Saving model ...")
-    model.save(os.path.join(definitions.MODEL_DATA_DIR, "keras_model.txt"))
+
+    file_gen = lambda index: os.path.join(definitions.MODEL_DATA_DIR, "keras_model{0}.txt").format(index)
+
+    index = 1
+    while os.path.isfile(file_gen(index)):
+        index += 1
+
+    model.save(file_gen(index))
 
 
 if __name__ == '__main__':
