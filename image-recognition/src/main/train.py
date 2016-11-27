@@ -72,6 +72,43 @@ def load_data():
 
     return (X_train, y_train), (np.array(X_test), np.array(y_test))
 
+def create_simple_model(num_classes):
+    model = Sequential()
+    model.add(Convolution2D(32, 3, 3, input_shape=(3, config.IMAGE_SIZE, config.IMAGE_SIZE), border_mode='same',
+                            activation='relu',
+                            W_constraint=maxnorm(3)))
+    model.add(Dropout(0.2))
+    model.add(Convolution2D(32, 3, 3, activation='relu', border_mode='same', W_constraint=maxnorm(3)))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Flatten())
+    model.add(Dense(512, activation='relu', W_constraint=maxnorm(3)))
+    model.add(Dropout(0.5))
+    model.add(Dense(num_classes, activation='softmax'))
+    return model
+
+def create_complex_model(num_classes):
+    model = Sequential()
+    model.add(Convolution2D(32, 3, 3, input_shape=(3, config.IMAGE_SIZE, config.IMAGE_SIZE), activation='relu', border_mode='same'))
+    model.add(Dropout(0.2))
+    model.add(Convolution2D(32, 3, 3, activation='relu', border_mode='same'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Convolution2D(64, 3, 3, activation='relu', border_mode='same'))
+    model.add(Dropout(0.2))
+    model.add(Convolution2D(64, 3, 3, activation='relu', border_mode='same'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Convolution2D(128, 3, 3, activation='relu', border_mode='same'))
+    model.add(Dropout(0.2))
+    model.add(Convolution2D(128, 3, 3, activation='relu', border_mode='same'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Flatten())
+    model.add(Dropout(0.2))
+    model.add(Dense(1024, activation='relu', W_constraint=maxnorm(3)))
+    model.add(Dropout(0.2))
+    model.add(Dense(512, activation='relu', W_constraint=maxnorm(3)))
+    model.add(Dropout(0.2))
+    model.add(Dense(num_classes, activation='softmax'))
+    return model
+
 def train():
     # fix random seed for reproducibility
     seed = 7
@@ -92,16 +129,7 @@ def train():
     num_classes = y_test.shape[1]
 
     # Create the model
-    model = Sequential()
-    model.add(Convolution2D(32, 3, 3, input_shape=(3, config.IMAGE_SIZE, config.IMAGE_SIZE), border_mode='same', activation='relu',
-                            W_constraint=maxnorm(3)))
-    model.add(Dropout(0.2))
-    model.add(Convolution2D(32, 3, 3, activation='relu', border_mode='same', W_constraint=maxnorm(3)))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Flatten())
-    model.add(Dense(512, activation='relu', W_constraint=maxnorm(3)))
-    model.add(Dropout(0.5))
-    model.add(Dense(num_classes, activation='softmax'))
+    model = create_complex_model(num_classes)
     # Compile model
     decay = config.LEARN_RATE / config.EPOCHS
     sgd = SGD(lr=config.LEARN_RATE, momentum=config.MOMENTUM, decay=decay, nesterov=False)
@@ -114,14 +142,13 @@ def train():
     scores = model.evaluate(X_test, y_test, verbose=0)
     print("Accuracy: %.2f%%" % (scores[1] * 100))
 
-    print("Saving model ...")
-
     file_gen = lambda index: os.path.join(definitions.MODEL_DATA_DIR, "keras_model{0}.txt").format(index)
 
     index = 1
     while os.path.isfile(file_gen(index)):
         index += 1
 
+    print("Saving model ...")
     model.save(file_gen(index))
 
 
