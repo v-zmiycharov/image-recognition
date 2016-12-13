@@ -47,8 +47,8 @@ def get_data(folder, is_train):
     y_data = np.zeros((images_count,), dtype="uint8")
 
     total_size = 0
-    for i in range(1, batches_count):
-        fpath = os.path.join(folder, '{0}{1}.bin'.format(prefix, str(i)))
+    for i in range(batches_count):
+        fpath = os.path.join(folder, '{0}{1}.bin'.format(prefix, str(i+1)))
         data, labels = load_batch(fpath)
         batch_size = len(labels)
         X_data[total_size: total_size + batch_size, :, :, :] = data

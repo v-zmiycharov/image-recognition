@@ -6,8 +6,8 @@ import keras.models as k_models
 import numpy as np
 from keras.optimizers import SGD
 from data.imagenet_metadata import IMAGES
-import pickle
 from src.main.train import get_data
+from src.main.train import load_globals
 
 def load_model(folder):
     global MODEL
@@ -22,10 +22,11 @@ def predict(img_path):
     return MODEL.predict(np.array([img_array]))
 
 def predict_label(img):
-    predictions = MODEL.predict(img)
+    predictions = MODEL.predict(np.array([img]))
+    predictions = predictions[0]
     m = max(predictions)
     max_index = [i for i,j in enumerate(predictions) if j == m]
-    return max_index
+    return max_index[0]
 
 def get_label(index):
     return [item[1] for item in IMAGES if item[0] == index][0]
@@ -35,37 +36,42 @@ def format_scores(scores):
         return "-".join([get_label(index) + ":%.2f" % score for index, score in enumerate(score_row) if score >= 0.01])
 
 def log_acc(header, correct, total):
-    print('{0} : {1}% ({2} / {3})'.format(header, 100*(correct/total), correct, total))
+    print('{0}: {1}%     {2}/{3}'.format(header, "%.2f" % (100*(correct/total)), correct, total))
 
 def log_info(header, correct_dict, total_dict):
     print('------------ {0} ------------'.format(header))
     correct = 0
     total = 0
-    for key in correct_dict:
-        correct += correct_dict[key]
-        total += total_dict[key]
-        log_acc(key, correct_dict[key], total_dict[key])
+    for label in correct_dict:
+        correct += correct_dict[label]
+        total += total_dict[label]
+        log_acc(get_label(label), correct_dict[label], total_dict[label])
 
     log_acc('TOTAL', correct, total)
+    print()
+
+def init_dict():
+    result = dict()
+    for tuple in IMAGES[:config.NUM_CLASSES]:
+        result[tuple[0]] = 0
+    return result
 
 if __name__ == '__main__':
-    total_items = dict()
-    correct_items = dict()
+    total_items = init_dict()
+    correct_items = init_dict()
 
     for dir_name in os.listdir(definitions.MODELS_DIR):
         path = os.path.join(definitions.MODELS_DIR, dir_name)
         if os.path.isdir(path):
+            load_globals(path)
             load_model(path)
-            folder_total_items = dict()
-            folder_correct_items = dict()
+            folder_total_items = init_dict()
+            folder_correct_items = init_dict()
 
             X_data, y_data = get_data(path, False)
 
-            for img, label in zip(X_data, y_data):
-                if not label in folder_total_items:
-                    folder_total_items[label] = 0
-                if not label in folder_correct_items:
-                    folder_total_items[label] = 0
+            for img, label_np in zip(X_data, y_data):
+                label = label_np[0]
 
                 folder_total_items[label] += 1
 
@@ -75,14 +81,9 @@ if __name__ == '__main__':
 
 
             for key, value in folder_total_items.items():
-                if key not in total_items:
-                    total_items[key] = 0
                 total_items[key] += folder_total_items[key]
 
-
             for key, value in folder_correct_items.items():
-                if key not in correct_items:
-                    correct_items[key] = 0
                 correct_items[key] += folder_correct_items[key]
 
             log_info(dir_name, folder_correct_items, folder_total_items)
