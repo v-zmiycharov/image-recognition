@@ -16,21 +16,14 @@ import os
 import pickle
 K.set_image_dim_ordering('th')
 
-TRAIN_SAMPLES = 0
-TEST_SAMPLES = 0
-BATCH_COUNT = 0
+def load_globals(folder):
+    global TRAIN_BATCHES_COUNT
+    global TRAIN_IMAGES_COUNT
+    global TEST_BATCHES_COUNT
+    global TEST_IMAGES_COUNT
 
-def load_globals():
-    global TRAIN_SAMPLES
-    global TEST_SAMPLES
-    global BATCH_COUNT
-
-    TRAIN_SAMPLES, TEST_SAMPLES, BATCH_COUNT \
-        = pickle.load(open(os.path.join(definitions.BIN_DATA_DIR, '_metadata.bin'), 'rb'))
-
-def images_per_batch(batch_index):
-    if batch_index == BATCH_COUNT:
-        return
+    TRAIN_BATCHES_COUNT, TRAIN_IMAGES_COUNT, TEST_BATCHES_COUNT, TEST_IMAGES_COUNT \
+        = pickle.load(open(os.path.join(folder, config.METADATA_FILENAME), 'rb'))
 
 
 def load_batch(fpath):
@@ -45,26 +38,30 @@ def load_batch(fpath):
 
     return data, labels
 
-def load_data():
-    path = definitions.BIN_DATA_DIR
+def get_data(folder, is_train):
+    images_count = TRAIN_IMAGES_COUNT if is_train else TEST_IMAGES_COUNT
+    batches_count = TRAIN_BATCHES_COUNT if is_train else TEST_BATCHES_COUNT
+    prefix = config.TRAIN_BATCH_PREFIX if is_train else config.TEST_BATCH_PREFIX
 
-    X_train = np.zeros((TRAIN_SAMPLES, config.IMAGE_DEPTH, config.IMAGE_SIZE, config.IMAGE_SIZE), dtype="uint8")
-    y_train = np.zeros((TRAIN_SAMPLES,), dtype="uint8")
+    X_data = np.zeros((images_count, config.IMAGE_DEPTH, config.IMAGE_SIZE, config.IMAGE_SIZE), dtype="uint8")
+    y_data = np.zeros((images_count,), dtype="uint8")
 
     total_size = 0
-    for i in range(1, BATCH_COUNT):
-        fpath = os.path.join(path, 'data_batch_%d.bin' % i)
+    for i in range(1, batches_count):
+        fpath = os.path.join(folder, '{0}{1}.bin'.format(prefix, str(i)))
         data, labels = load_batch(fpath)
         batch_size = len(labels)
-        X_train[total_size: total_size + batch_size, :, :, :] = data
-        y_train[total_size: total_size + batch_size] = labels
+        X_data[total_size: total_size + batch_size, :, :, :] = data
+        y_data[total_size: total_size + batch_size] = labels
         total_size += batch_size
 
-    fpath = os.path.join(path, 'test_batch.bin')
-    X_test, y_test = load_batch(fpath)
+    y_data = np.reshape(y_data, (len(y_data), 1))
 
-    y_train = np.reshape(y_train, (len(y_train), 1))
-    y_test = np.reshape(y_test, (len(y_test), 1))
+    return X_data, y_data
+
+def load_data(folder):
+    X_train, y_train = get_data(folder, True)
+    X_test, y_test = get_data(folder, False)
 
     if K.image_dim_ordering() == 'tf':
         X_train = X_train.transpose(0, 2, 3, 1)
@@ -109,13 +106,13 @@ def create_complex_model(num_classes):
     model.add(Dense(num_classes, activation='softmax'))
     return model
 
-def train():
+def train(folder):
     # fix random seed for reproducibility
     seed = 7
     np.random.seed(seed)
 
     # load data
-    (X_train, y_train), (X_test, y_test) = load_data()
+    (X_train, y_train), (X_test, y_test) = load_data(folder)
 
     # normalize inputs from 0-255 to 0.0-1.0
     X_train = X_train.astype('float32')
@@ -142,16 +139,15 @@ def train():
     scores = model.evaluate(X_test, y_test, verbose=0)
     print("Accuracy: %.2f%%" % (scores[1] * 100))
 
-    file_gen = lambda index: os.path.join(definitions.MODEL_DATA_DIR, "keras_model{0}.txt").format(index)
-
-    index = 1
-    while os.path.isfile(file_gen(index)):
-        index += 1
+    file_name = os.path.join(folder, config.MODEL_FILENAME)
 
     print("Saving model ...")
-    model.save(file_gen(index))
+    model.save(file_name)
 
 
 if __name__ == '__main__':
-    load_globals()
-    train()
+    for path in os.listdir(definitions.MODELS_DIR):
+        path = os.path.join(definitions.MODELS_DIR, path)
+        if os.path.isdir(path):
+            load_globals(path)
+            train(path)
