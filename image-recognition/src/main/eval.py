@@ -11,7 +11,7 @@ MODEL = None
 
 def load_model():
     global MODEL
-    MODEL = k_models.load_model(os.path.join(definitions.MODEL_DATA_DIR, "keras_model.txt"))
+    MODEL = k_models.load_model(os.path.join(definitions.MODEL_DATA_DIR, "keras_model1.txt"))
 
     decay = config.LEARN_RATE / config.EPOCHS
     sgd = SGD(lr=config.LEARN_RATE, momentum=config.MOMENTUM, decay=decay, nesterov=False)
@@ -21,9 +21,12 @@ def predict(img_path):
     img_array = bin_generator.img_to_np(img_path, config.IMAGE_SIZE)
     return MODEL.predict(np.array([img_array]))
 
+def get_label(index):
+    return [item[1] for item in IMAGES if item[0] == index][0]
+
 def format_scores(scores):
     for score_row in scores:
-        return "-".join(["%.2f" % score for score in score_row])
+        return "-".join([get_label(index) + ":%.2f" % score for index, score in enumerate(score_row) if score >= 0.01])
 
 if __name__ == '__main__':
     load_model()
