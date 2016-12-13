@@ -111,6 +111,7 @@ if __name__ == '__main__':
     clear_dir(definitions.MODELS_DIR)
 
     for i, (train_paths, test_paths) in enumerate(load_cross_validation()):
+        print('--------- ITERATION {0} ---------'.format(str(i+1)))
         handle_paths(train_paths, test_paths, i+1)
 
 
