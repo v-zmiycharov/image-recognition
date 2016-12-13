@@ -9,25 +9,28 @@ import definitions
 from data.imagenet_metadata import IMAGES
 
 import pickle
+import shutil
 
-def clear_dir(dir_path):
-    for file in os.listdir(dir_path):
-        path = os.path.join(dir_path, file)
-        if os.path.isfile(path):
-            os.unlink(path)
+def clear_dir(folder):
+    for f in os.listdir(folder):
+        path = os.path.join(folder, f)
+        try:
+            if os.path.isfile(path):
+                os.unlink(path)
+            elif os.path.isdir(path):
+                 shutil.rmtree(path)
+        except Exception as e:
+            print(e)
 
 def chunks(l, n):
     """Yield successive n-sized chunks from l."""
     for i in range(0, len(l), n):
         yield l[i:i + n]
 
-def save_np_to_file(chunk, batch_number = 0, is_train = True):
-    file_name = 'data_batch_{0}.bin'.format(batch_number)
+def save_np_to_file(chunk, batch_number, is_train, folder):
+    file_name = (config.TRAIN_BATCH_PREFIX if is_train else config.TEST_BATCH_PREFIX) + '{0}.bin'.format(batch_number)
 
-    if not is_train:
-        file_name = 'test_batch.bin'
-
-    file_path = os.path.join(definitions.BIN_DATA_DIR, file_name)
+    file_path = os.path.join(folder, file_name)
     pickle.dump(chunk, open(file_path, 'wb'))
 
 
@@ -55,54 +58,62 @@ def img_to_list(img_path, image_size, label):
     )
 
 
-def load_dataset(num_classes, image_size, images_count = 0, is_train = True):
-    dir_name = definitions.IMAGES_DIR_NAME if is_train else definitions.TEST_DIR_NAME
-
-    allowed_labels = IMAGES[:num_classes]
+def load_cross_validation():
+    allowed_labels = IMAGES[:config.NUM_CLASSES]
 
     result_list=[]
 
     for label in allowed_labels:
-        full_dir_path = os.path.join(definitions.IMAGE_NET_DIR, label[1], dir_name)
+        full_dir_path = os.path.join(definitions.IMAGE_NET_DIR, label[1])
         files = os.listdir(full_dir_path)
-        if images_count > 0:
-            files = files[:images_count]
 
         for filename in files:
-            try:
-                result_list.append(img_to_list(os.path.join(full_dir_path, filename), image_size, label[0]))
-            except IndexError as err:
-                print(os.path.join(full_dir_path, filename))
+            result_list.append((label[0], os.path.join(full_dir_path, filename)))
 
-    if is_train:
-        shuffle(result_list)
+    shuffle(result_list)
 
-    batches_count = num_classes if is_train else 1
-    items_in_batch = len(result_list) // batches_count
+    all_chunks = list(chunks(result_list, (len(result_list)//config.N_FOLD_CROSS_VALIDATION) + 1))
 
+    for i in range(len(all_chunks)):
+        yield list(inner for index, chunk in enumerate(all_chunks) if index != i for inner in chunk), all_chunks[i]
+
+
+def save_bins(paths, folder, is_train):
     batch_number = 0
 
-    for chunk in chunks(result_list, items_in_batch):
+    for chunk in chunks(paths, config.IMAGES_IN_BATCH):
+        img_info_chunk = []
+        for label_id, path in chunk:
+            try:
+                img_info_chunk.append(img_to_list(path, config.IMAGE_SIZE, label_id))
+            except IndexError:
+                print('Index Error: ', path)
+
         batch_number += 1
         print("Generate {0} batch #{1}".format("train" if is_train else "test", batch_number))
-        save_np_to_file(chunk, batch_number, is_train)
+        save_np_to_file(img_info_chunk, batch_number, is_train, folder)
 
-    if is_train:
-        print(str(batch_number) + " batches")
-        print(str(len(result_list)) + " train items")
-    else:
-        print(str(len(result_list)) + " test items")
+    return batch_number, len(paths)
 
-    return batch_number, len(result_list)
 
-if __name__ == '__main__':
-    clear_dir(definitions.BIN_DATA_DIR)
-    batch_count, train_items = load_dataset(config.NUM_CLASSES, config.IMAGE_SIZE)
-    temp, test_items = load_dataset(config.NUM_CLASSES, config.IMAGE_SIZE, is_train = False)
+def handle_paths(train_paths, test_paths, iter_number):
+    folder = os.path.join(definitions.MODELS_DIR, str(iter_number))
+    os.mkdir(folder)
+
+    train_batches_count, train_images_count = save_bins(train_paths, folder, True)
+    test_batches_count, test_images_count = save_bins(test_paths, folder, False)
 
     pickle.dump(
-        (train_items, test_items, batch_count)
-        , open(os.path.join(definitions.BIN_DATA_DIR, '_metadata.bin'), 'wb'))
+        (train_batches_count, train_images_count, test_batches_count, test_images_count)
+        , open(os.path.join(folder, config.METADATA_FILENAME), 'wb'))
+
+if __name__ == '__main__':
+    clear_dir(definitions.MODELS_DIR)
+
+    for i, (train_paths, test_paths) in enumerate(load_cross_validation()):
+        handle_paths(train_paths, test_paths, i+1)
+
+
 
 
 
