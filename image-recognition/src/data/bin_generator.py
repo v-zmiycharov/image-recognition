@@ -74,7 +74,8 @@ def load_cross_validation():
 
     all_chunks = list(chunks(result_list, (len(result_list)//config.N_FOLD_CROSS_VALIDATION) + 1))
 
-    for i in range(len(all_chunks)):
+    stop_range = len(all_chunks) if config.CROSS_VALIDATION_ENABLED else 1
+    for i in range(stop_range):
         yield list(inner for index, chunk in enumerate(all_chunks) if index != i for inner in chunk), all_chunks[i]
 
 
