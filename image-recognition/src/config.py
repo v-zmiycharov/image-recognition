@@ -15,4 +15,6 @@ IMAGES_IN_BATCH = 1000
 TRAIN_BATCH_PREFIX = 'train_batch_'
 TEST_BATCH_PREFIX = 'test_batch_'
 METADATA_FILENAME = '_metadata.bin'
-MODEL_FILENAME = '_model.bin'
+
+MODEL_JSON_FILENAME = '_model.json'
+MODEL_WEIGHTS_FILENAME = '_model.h5'

@@ -10,10 +10,19 @@ from src.main.train import get_data
 from src.main.train import load_globals
 from src.main.common import get_folder
 
-def load_model(folder):
-    global MODEL
-    MODEL = k_models.load_model(os.path.join(folder, config.MODEL_FILENAME))
+def load_model(parent_folder):
+    json_file = os.path.join(parent_folder, config.MODEL_JSON_FILENAME)
+    weights_file = os.path.join(parent_folder, config.MODEL_WEIGHTS_FILENAME)
 
+    global MODEL
+
+    with open(json_file, 'r') as fr:
+        loaded_model_json = fr.read()
+    MODEL = k_models.model_from_json(loaded_model_json)
+    # load weights into new model
+    MODEL.load_weights(weights_file)
+
+    # compile model
     decay = config.LEARN_RATE / config.EPOCHS
     sgd = SGD(lr=config.LEARN_RATE, momentum=config.MOMENTUM, decay=decay, nesterov=False)
     MODEL.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])

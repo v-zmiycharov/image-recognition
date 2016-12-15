@@ -108,6 +108,15 @@ def create_complex_model(num_classes):
     model.add(Dense(num_classes, activation='softmax'))
     return model
 
+def save_model(model, parent_folder):
+    json_file = os.path.join(parent_folder, config.MODEL_JSON_FILENAME)
+    weights_file = os.path.join(parent_folder, config.MODEL_WEIGHTS_FILENAME)
+
+    model_json = model.to_json()
+    with open(json_file, "w") as json_file:
+        json_file.write(model_json)
+    model.save_weights(weights_file)
+
 def train(folder):
     # fix random seed for reproducibility
     seed = 7
@@ -141,10 +150,8 @@ def train(folder):
     scores = model.evaluate(X_test, y_test, verbose=0)
     print("Accuracy: %.2f%%" % (scores[1] * 100))
 
-    file_name = os.path.join(folder, config.MODEL_FILENAME)
-
     print("Saving model ...")
-    model.save(file_name)
+    save_model(model, folder)
 
 
 if __name__ == '__main__':
