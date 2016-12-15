@@ -9,7 +9,6 @@ import definitions
 from data.imagenet_metadata import IMAGES
 
 import pickle
-import shutil
 from time import gmtime, strftime
 
 def chunks(l, n):

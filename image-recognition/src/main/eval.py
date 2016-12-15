@@ -49,7 +49,8 @@ def log_acc(header, correct, total):
     print('{0}: {1}%     {2}/{3}'.format(header, "%.2f" % (100*(correct/total)), correct, total))
 
 def log_info(header, correct_dict, total_dict):
-    print('------------ {0} ------------'.format(header))
+    if config.CROSS_VALIDATION_ENABLED:
+        print('------------ {0} ------------'.format(header))
     correct = 0
     total = 0
     for label in correct_dict:
@@ -83,8 +84,10 @@ if __name__ == '__main__':
 
             (_, _), (X_data, y_data) = load_data(path)
 
+            '''
             scores = MODEL.evaluate(X_data, y_data.reshape((-1,1)), verbose=0)
             print("Accuracy: %.2f%%" % (scores[1] * 100))
+            '''
 
             for img, label_np in zip(X_data, y_data):
                 label = label_np[0]
@@ -104,4 +107,5 @@ if __name__ == '__main__':
 
             log_info(dir_name, folder_correct_items, folder_total_items)
 
-    log_info('TOTAL', correct_items, total_items)
+    if config.CROSS_VALIDATION_ENABLED:
+        log_info('TOTAL', correct_items, total_items)

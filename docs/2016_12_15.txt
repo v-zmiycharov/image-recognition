@@ -1,4 +1,4 @@
-Date: 15.12.2016
+Date: 15.12.2016 10:08:27
 Number of classes: 5
 
 alligator: 66.91%     182/272

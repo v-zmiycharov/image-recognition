@@ -10,6 +10,7 @@ from keras.layers.convolutional import MaxPooling2D
 from keras.utils import np_utils
 
 from src.main.common import get_folder
+from time import gmtime, strftime
 
 import config
 from keras import backend as K
@@ -126,6 +127,12 @@ def save_model(model, parent_folder):
         json_file.write(model_json)
     model.save_weights(weights_file)
 
+def log_info():
+    print()
+    print('Date: ', strftime("%d.%m.%Y %H:%M:%S", gmtime()))
+    print('Number of classes: ', str(config.NUM_CLASSES))
+
+
 def train(folder):
     # fix random seed for reproducibility
     seed = 7
@@ -141,6 +148,10 @@ def train(folder):
 
     # Create the model
     model = create_complex_model(num_classes)
+
+    # Log info
+    log_info()
+
     # Compile model
     decay = config.LEARN_RATE / config.EPOCHS
     sgd = SGD(lr=config.LEARN_RATE, momentum=config.MOMENTUM, decay=decay, nesterov=False)
