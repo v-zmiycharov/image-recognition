@@ -1,6 +1,0 @@
-Date: 27.11
-Epoch time: 360s
-Accuracy: 56.6%
-Model: 
-Epoch/Accuracy:
-
