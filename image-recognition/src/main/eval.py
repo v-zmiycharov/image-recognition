@@ -8,6 +8,7 @@ from keras.optimizers import SGD
 from data.imagenet_metadata import IMAGES
 from src.main.train import get_data
 from src.main.train import load_globals
+from src.main.common import get_folder
 
 def load_model(folder):
     global MODEL
@@ -57,11 +58,13 @@ def init_dict():
     return result
 
 if __name__ == '__main__':
+    user_folder = get_folder(definitions.MODELS_DIR)
+
     total_items = init_dict()
     correct_items = init_dict()
 
-    for dir_name in os.listdir(definitions.MODELS_DIR):
-        path = os.path.join(definitions.MODELS_DIR, dir_name)
+    for dir_name in os.listdir(user_folder):
+        path = os.path.join(user_folder, dir_name)
         if os.path.isdir(path):
             load_globals(path)
             load_model(path)

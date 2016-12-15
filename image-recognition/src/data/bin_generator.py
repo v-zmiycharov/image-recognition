@@ -10,17 +10,7 @@ from data.imagenet_metadata import IMAGES
 
 import pickle
 import shutil
-
-def clear_dir(folder):
-    for f in os.listdir(folder):
-        path = os.path.join(folder, f)
-        try:
-            if os.path.isfile(path):
-                os.unlink(path)
-            elif os.path.isdir(path):
-                 shutil.rmtree(path)
-        except Exception as e:
-            print(e)
+from time import gmtime, strftime
 
 def chunks(l, n):
     """Yield successive n-sized chunks from l."""
@@ -97,8 +87,8 @@ def save_bins(paths, folder, is_train):
     return batch_number, len(paths)
 
 
-def handle_paths(train_paths, test_paths, iter_number):
-    folder = os.path.join(definitions.MODELS_DIR, str(iter_number))
+def handle_paths(train_paths, test_paths, iter_number, folder):
+    folder = os.path.join(folder, str(iter_number))
     os.mkdir(folder)
 
     train_batches_count, train_images_count = save_bins(train_paths, folder, True)
@@ -109,11 +99,12 @@ def handle_paths(train_paths, test_paths, iter_number):
         , open(os.path.join(folder, config.METADATA_FILENAME), 'wb'))
 
 if __name__ == '__main__':
-    clear_dir(definitions.MODELS_DIR)
+    current_folder = os.path.join(definitions.MODELS_DIR, strftime("%Y%m%d_%H%M%S", gmtime()))
+    os.mkdir(current_folder)
 
     for i, (train_paths, test_paths) in enumerate(load_cross_validation()):
         print('--------- ITERATION {0} ---------'.format(str(i+1)))
-        handle_paths(train_paths, test_paths, i+1)
+        handle_paths(train_paths, test_paths, i+1, current_folder)
 
 
 

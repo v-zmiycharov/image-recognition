@@ -9,6 +9,8 @@ from keras.layers.convolutional import Convolution2D
 from keras.layers.convolutional import MaxPooling2D
 from keras.utils import np_utils
 
+from src.main.common import get_folder
+
 import config
 from keras import backend as K
 import definitions
@@ -146,8 +148,10 @@ def train(folder):
 
 
 if __name__ == '__main__':
-    for path in os.listdir(definitions.MODELS_DIR):
-        path = os.path.join(definitions.MODELS_DIR, path)
+    user_folder = get_folder(definitions.MODELS_DIR)
+
+    for path in os.listdir(user_folder):
+        path = os.path.join(user_folder, path)
         if os.path.isdir(path):
             load_globals(path)
             train(path)
