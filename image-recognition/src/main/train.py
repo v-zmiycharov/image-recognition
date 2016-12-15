@@ -69,7 +69,16 @@ def load_data(folder):
         X_train = X_train.transpose(0, 2, 3, 1)
         X_test = X_test.transpose(0, 2, 3, 1)
 
-    return (X_train, y_train), (np.array(X_test), np.array(y_test))
+    X_test = np.array(X_test)
+    y_test = np.array(y_test)
+
+    # normalize inputs from 0-255 to 0.0-1.0
+    X_train = X_train.astype('float32')
+    X_test = X_test.astype('float32')
+    X_train = X_train / 255.0
+    X_test = X_test / 255.0
+
+    return (X_train, y_train), (X_test, y_test)
 
 def create_simple_model(num_classes):
     model = Sequential()
@@ -124,12 +133,6 @@ def train(folder):
 
     # load data
     (X_train, y_train), (X_test, y_test) = load_data(folder)
-
-    # normalize inputs from 0-255 to 0.0-1.0
-    X_train = X_train.astype('float32')
-    X_test = X_test.astype('float32')
-    X_train = X_train / 255.0
-    X_test = X_test / 255.0
 
     # one hot encode outputs
     y_train = np_utils.to_categorical(y_train)

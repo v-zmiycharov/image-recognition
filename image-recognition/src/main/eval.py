@@ -6,7 +6,7 @@ import keras.models as k_models
 import numpy as np
 from keras.optimizers import SGD
 from data.imagenet_metadata import IMAGES
-from src.main.train import get_data
+from src.main.train import load_data
 from src.main.train import load_globals
 from src.main.common import get_folder
 
@@ -25,7 +25,7 @@ def load_model(parent_folder):
     # compile model
     decay = config.LEARN_RATE / config.EPOCHS
     sgd = SGD(lr=config.LEARN_RATE, momentum=config.MOMENTUM, decay=decay, nesterov=False)
-    MODEL.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
+    MODEL.compile(loss='sparse_categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
 
 def predict(img_path):
     img_array = bin_generator.img_to_np(img_path, config.IMAGE_SIZE)
@@ -77,10 +77,14 @@ if __name__ == '__main__':
         if os.path.isdir(path):
             load_globals(path)
             load_model(path)
+
             folder_total_items = init_dict()
             folder_correct_items = init_dict()
 
-            X_data, y_data = get_data(path, False)
+            (_, _), (X_data, y_data) = load_data(path)
+
+            scores = MODEL.evaluate(X_data, y_data.reshape((-1,1)), verbose=0)
+            print("Accuracy: %.2f%%" % (scores[1] * 100))
 
             for img, label_np in zip(X_data, y_data):
                 label = label_np[0]
