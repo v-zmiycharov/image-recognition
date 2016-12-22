@@ -1,14 +1,8 @@
 import numpy as np
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.layers import Dropout
-from keras.layers import Flatten
-from keras.constraints import maxnorm
 from keras.optimizers import SGD
-from keras.layers.convolutional import Convolution2D
-from keras.layers.convolutional import MaxPooling2D
 from keras.utils import np_utils
 
+from src.main.models import create_complex_model as create_model
 from src.main.common import get_folder
 from time import gmtime, strftime
 
@@ -81,43 +75,6 @@ def load_data(folder):
 
     return (X_train, y_train), (X_test, y_test)
 
-def create_simple_model(num_classes):
-    model = Sequential()
-    model.add(Convolution2D(32, 3, 3, input_shape=(3, config.IMAGE_SIZE, config.IMAGE_SIZE), border_mode='same',
-                            activation='relu',
-                            W_constraint=maxnorm(3)))
-    model.add(Dropout(0.2))
-    model.add(Convolution2D(32, 3, 3, activation='relu', border_mode='same', W_constraint=maxnorm(3)))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Flatten())
-    model.add(Dense(512, activation='relu', W_constraint=maxnorm(3)))
-    model.add(Dropout(0.5))
-    model.add(Dense(num_classes, activation='softmax'))
-    return model
-
-def create_complex_model(num_classes):
-    model = Sequential()
-    model.add(Convolution2D(32, 3, 3, input_shape=(3, config.IMAGE_SIZE, config.IMAGE_SIZE), activation='relu', border_mode='same'))
-    model.add(Dropout(0.2))
-    model.add(Convolution2D(32, 3, 3, activation='relu', border_mode='same'))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Convolution2D(64, 3, 3, activation='relu', border_mode='same'))
-    model.add(Dropout(0.2))
-    model.add(Convolution2D(64, 3, 3, activation='relu', border_mode='same'))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Convolution2D(128, 3, 3, activation='relu', border_mode='same'))
-    model.add(Dropout(0.2))
-    model.add(Convolution2D(128, 3, 3, activation='relu', border_mode='same'))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Flatten())
-    model.add(Dropout(0.2))
-    model.add(Dense(1024, activation='relu', W_constraint=maxnorm(3)))
-    model.add(Dropout(0.2))
-    model.add(Dense(512, activation='relu', W_constraint=maxnorm(3)))
-    model.add(Dropout(0.2))
-    model.add(Dense(num_classes, activation='softmax'))
-    return model
-
 def save_model(model, parent_folder):
     json_file = os.path.join(parent_folder, config.MODEL_JSON_FILENAME)
     weights_file = os.path.join(parent_folder, config.MODEL_WEIGHTS_FILENAME)
@@ -147,7 +104,7 @@ def train(folder):
     num_classes = y_test.shape[1]
 
     # Create the model
-    model = create_complex_model(num_classes)
+    model = create_model(num_classes)
 
     # Log info
     log_info()
