@@ -5,7 +5,7 @@ from keras.layers import Dense
 from keras.layers import Dropout
 from keras.layers import Flatten
 from keras.constraints import maxnorm
-import config
+import src.config as config
 
 def create_simple_model(num_classes):
     model = Sequential()

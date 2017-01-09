@@ -6,7 +6,7 @@ from time import localtime, strftime
 import requests
 
 import definitions
-from data.imagenet_metadata import IMAGES
+from src.data.imagenet_metadata import IMAGES
 
 
 def generate_download_url(synset_id):

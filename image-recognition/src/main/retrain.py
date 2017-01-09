@@ -1,5 +1,5 @@
 import os
-import config
+import src.config as config
 import definitions
 import keras.models as k_models
 from keras.optimizers import SGD

@@ -1,5 +1,5 @@
 import os
-import config
+import src.config as config
 import definitions
 import src.data.bin_generator as bin_generator
 import keras.models as k_models

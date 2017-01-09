@@ -6,7 +6,7 @@ from src.main.models import create_complex_model as create_model
 from src.main.common import get_folder
 from time import gmtime, strftime
 
-import config
+import src.config as config
 from keras import backend as K
 import definitions
 import os

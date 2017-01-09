@@ -6,7 +6,7 @@ from PIL import Image
 
 import config
 import definitions
-from data.imagenet_metadata import IMAGES
+from src.data.imagenet_metadata import IMAGES
 
 import pickle
 from time import gmtime, strftime
