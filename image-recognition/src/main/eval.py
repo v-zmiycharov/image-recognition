@@ -5,7 +5,7 @@ import src.data.bin_generator as bin_generator
 import keras.models as k_models
 import numpy as np
 from keras.optimizers import SGD
-from data.imagenet_metadata import IMAGES
+from src.data.imagenet_metadata import IMAGES
 from src.main.train import load_data
 from src.main.train import load_globals
 from src.main.common import get_folder

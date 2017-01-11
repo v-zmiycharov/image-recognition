@@ -4,7 +4,7 @@ from random import shuffle
 import numpy as np
 from PIL import Image
 
-import config
+import src.config as config
 import definitions
 from src.data.imagenet_metadata import IMAGES
 
