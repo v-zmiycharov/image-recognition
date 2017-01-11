@@ -97,7 +97,7 @@ def handle_paths(train_paths, test_paths, iter_number, folder):
         (train_batches_count, train_images_count, test_batches_count, test_images_count)
         , open(os.path.join(folder, config.METADATA_FILENAME), 'wb'))
 
-if __name__ == '__main__':
+def main():
     current_folder = os.path.join(definitions.MODELS_DIR, strftime("%Y%m%d_%H%M%S", gmtime()))
     os.mkdir(current_folder)
 
@@ -105,6 +105,9 @@ if __name__ == '__main__':
         print('--------- ITERATION {0} ---------'.format(str(i+1)))
         handle_paths(train_paths, test_paths, i+1, current_folder)
 
+
+if __name__ == '__main__':
+    main()
 
 
 

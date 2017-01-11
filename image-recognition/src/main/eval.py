@@ -67,7 +67,7 @@ def init_dict():
         result[tuple[0]] = 0
     return result
 
-if __name__ == '__main__':
+def main():
     user_folder = get_folder(definitions.MODELS_DIR)
 
     total_items = init_dict()
@@ -109,3 +109,7 @@ if __name__ == '__main__':
 
     if config.CROSS_VALIDATION_ENABLED:
         log_info('TOTAL', correct_items, total_items)
+
+
+if __name__ == '__main__':
+    main()

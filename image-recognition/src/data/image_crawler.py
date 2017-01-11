@@ -58,9 +58,11 @@ def process_animal(tupple):
         os.remove(file_path)
 
 
-if __name__ == '__main__':
+def main():
     pool = ThreadPool(4)
     pool.map(process_animal, get_metadata())
 
+if __name__ == '__main__':
+    main()
 
 

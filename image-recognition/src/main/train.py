@@ -125,7 +125,7 @@ def train(folder):
     save_model(model, folder)
 
 
-if __name__ == '__main__':
+def main():
     user_folder = get_folder(definitions.MODELS_DIR)
 
     for path in os.listdir(user_folder):
@@ -133,3 +133,6 @@ if __name__ == '__main__':
         if os.path.isdir(path):
             load_globals(path)
             train(path)
+
+if __name__ == '__main__':
+    main()
