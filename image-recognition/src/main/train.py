@@ -2,7 +2,7 @@ import numpy as np
 from keras.optimizers import SGD
 from keras.utils import np_utils
 
-from src.main.models import create_complex_model as create_model
+from src.main.models import create_simple_model as create_model
 from src.main.common import get_folder
 from time import gmtime, strftime
 
