@@ -8,8 +8,8 @@ import collections
 
 def init_functions_dict():
     dict = {
-        '1': ('Bin generator', bin_generator_main),
-        '2': ('Image crawler', image_crawler_main),
+        '1': ('Image crawler', image_crawler_main),
+        '2': ('Bin generator', bin_generator_main),
         '3': ('Train', train_main),
         '4': ('Eval', eval_main)
     }
