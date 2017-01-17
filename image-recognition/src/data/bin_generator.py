@@ -98,6 +98,9 @@ def handle_paths(train_paths, test_paths, iter_number, folder):
         , open(os.path.join(folder, config.METADATA_FILENAME), 'wb'))
 
 def main():
+    if not os.path.exists(definitions.MODELS_DIR):
+        os.makedirs(definitions.MODELS_DIR)
+
     current_folder = os.path.join(definitions.MODELS_DIR, strftime("%Y%m%d_%H%M%S", gmtime()))
     os.mkdir(current_folder)
 
