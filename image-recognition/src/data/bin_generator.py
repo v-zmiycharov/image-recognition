@@ -9,7 +9,7 @@ import definitions
 from src.data.imagenet_metadata import IMAGES
 
 import pickle
-from time import gmtime, strftime
+from time import localtime, strftime
 
 def chunks(l, n):
     """Yield successive n-sized chunks from l."""
@@ -101,7 +101,7 @@ def main():
     if not os.path.exists(definitions.MODELS_DIR):
         os.makedirs(definitions.MODELS_DIR)
 
-    current_folder = os.path.join(definitions.MODELS_DIR, strftime("%Y%m%d_%H%M%S", gmtime()))
+    current_folder = os.path.join(definitions.MODELS_DIR, strftime("%Y%m%d_%H%M%S", localtime()))
     os.mkdir(current_folder)
 
     for i, (train_paths, test_paths) in enumerate(load_cross_validation()):

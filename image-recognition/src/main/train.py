@@ -4,7 +4,7 @@ from keras.utils import np_utils
 
 from src.main.models import create_simple_model as create_model
 from src.main.common import get_folder
-from time import gmtime, strftime
+from time import localtime, strftime
 
 import src.config as config
 from keras import backend as K
@@ -86,7 +86,7 @@ def save_model(model, parent_folder):
 
 def log_info():
     print()
-    print('Date: ', strftime("%d.%m.%Y %H:%M:%S", gmtime()))
+    print('Date: ', strftime("%d.%m.%Y %H:%M:%S", localtime()))
     print('Number of classes: ', str(config.NUM_CLASSES))
 
 
