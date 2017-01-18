@@ -77,7 +77,9 @@ def save_bins(paths, folder, is_train):
             try:
                 img_info_chunk.append(img_to_list(path, config.IMAGE_SIZE, label_id))
             except IndexError:
-                print('Index Error: ', path)
+                print('Image not in expected dimensions: ', path)
+            except IOError:
+                print('OSError (cannot identify image): ', path)
 
         batch_number += 1
         print("Generate {0} batch #{1}".format("train" if is_train else "test", batch_number))
