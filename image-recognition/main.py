@@ -2,6 +2,7 @@ from src.data.bin_generator import main as bin_generator_main
 from src.data.image_crawler import main as image_crawler_main
 from src.main.train import main as train_main
 from src.main.eval import main as eval_main
+import tensorflow as tf
 
 import collections
 
@@ -16,6 +17,8 @@ def init_functions_dict():
     return collections.OrderedDict(sorted(dict.items()))
 
 if __name__ == '__main__':
+    sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
+
     functions_dict = init_functions_dict()
 
     for key, value in functions_dict.items():
