@@ -1,3 +1,5 @@
+from src.main import models
+
 IMAGE_SIZE = 224
 IMAGE_DEPTH = 3
 
@@ -18,3 +20,5 @@ METADATA_FILENAME = '_metadata.bin'
 
 MODEL_JSON_FILENAME = '_model.json'
 MODEL_WEIGHTS_FILENAME = '_model.h5'
+
+model_function = models.create_vgg16_model

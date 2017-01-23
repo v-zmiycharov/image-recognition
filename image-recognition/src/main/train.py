@@ -2,7 +2,6 @@ import numpy as np
 from keras.optimizers import SGD
 from keras.utils import np_utils
 
-from src.main.models import create_vgg16_model as create_model
 from src.main.common import get_folder
 from time import localtime, strftime
 
@@ -104,7 +103,7 @@ def train(folder):
     num_classes = y_test.shape[1]
 
     # Create the model
-    model = create_model(num_classes)
+    model = config.model_function(num_classes)
 
     # Log info
     log_info()
