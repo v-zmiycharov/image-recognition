@@ -6,7 +6,7 @@ from keras.layers import Dense
 from keras.layers import Dropout
 from keras.layers import Flatten
 from keras.constraints import maxnorm
-import src.config as config
+from src import config
 
 def create_vgg16_model(num_classes):
     fs = 3

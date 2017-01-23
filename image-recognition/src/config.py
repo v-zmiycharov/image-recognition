@@ -1,4 +1,4 @@
-from src.main import models
+import src.main.models as models
 
 IMAGE_SIZE = 224
 IMAGE_DEPTH = 3
