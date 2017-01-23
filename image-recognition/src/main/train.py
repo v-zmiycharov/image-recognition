@@ -110,7 +110,7 @@ def train(folder):
 
     # Compile model
     decay = config.LEARN_RATE / config.EPOCHS
-    sgd = SGD(lr=config.LEARN_RATE, momentum=config.MOMENTUM, decay=decay, nesterov=False)
+    sgd = SGD(lr=config.LEARN_RATE, momentum=config.MOMENTUM, decay=decay, nesterov=config.NESTEROV)
     model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
     print(model.summary())
 

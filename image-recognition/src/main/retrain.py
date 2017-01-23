@@ -34,7 +34,7 @@ def load_model(parent_folder):
 
     # compile model
     decay = config.LEARN_RATE / config.EPOCHS
-    sgd = SGD(lr=config.LEARN_RATE, momentum=config.MOMENTUM, decay=decay, nesterov=False)
+    sgd = SGD(lr=config.LEARN_RATE, momentum=config.MOMENTUM, decay=decay, nesterov=config.NESTEROV)
     MODEL.compile(loss='sparse_categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
 
 if __name__ == '__main__':
