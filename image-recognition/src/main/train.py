@@ -100,10 +100,12 @@ def train(folder):
     # one hot encode outputs
     y_train = np_utils.to_categorical(y_train)
     y_test = np_utils.to_categorical(y_test)
+
     num_classes = y_test.shape[1]
+    image_size = X_train.shape[2]
 
     # Create the model
-    model = config.model_function(num_classes)
+    model = config.model_function(num_classes, image_size)
 
     # Log info
     log_info()
