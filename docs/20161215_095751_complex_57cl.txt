@@ -46,56 +46,56 @@ dense_3 (Dense)                  (None, 5)             2565        dropout_6[0][
 Total params: 9204005
 ____________________________________________________________________________________________________
 None
-Train on 5796 samples, validate on 1450 samples
+Train on 62920 samples, validate on 15731 samples
 Epoch 1/25
-201s - acc: 0.0497 - val_acc: 0.0784
+243s - acc: 0.0497 - val_acc: 0.0784
 Epoch 2/25
-201s - acc: 0.1048 - val_acc: 0.1149
+243s - acc: 0.1048 - val_acc: 0.1149
 Epoch 3/25
-201s - acc: 0.1412 - val_acc: 0.1399
+243s - acc: 0.1412 - val_acc: 0.1399
 Epoch 4/25
-201s - acc: 0.1703 - val_acc: 0.1610
+243s - acc: 0.1703 - val_acc: 0.1610
 Epoch 5/25
-201s - acc: 0.1963 - val_acc: 0.2074
+243s - acc: 0.1963 - val_acc: 0.2074
 Epoch 6/25
-201s - acc: 0.2229 - val_acc: 0.2322
+243s - acc: 0.2229 - val_acc: 0.2322
 Epoch 7/25
-201s - acc: 0.2446 - val_acc: 0.2474
+243s - acc: 0.2446 - val_acc: 0.2474
 Epoch 8/25
-201s - acc: 0.2681 - val_acc: 0.2484
+243s - acc: 0.2681 - val_acc: 0.2484
 Epoch 9/25
-201s - acc: 0.2912 - val_acc: 0.2807
+243s - acc: 0.2912 - val_acc: 0.2807
 Epoch 10/25
-201s - acc: 0.3169 - val_acc: 0.2875
+243s - acc: 0.3169 - val_acc: 0.2875
 Epoch 11/25
-201s - acc: 0.3406 - val_acc: 0.2975
+243s - acc: 0.3406 - val_acc: 0.2975
 Epoch 12/25
-201s - acc: 0.3634 - val_acc: 0.3083
+243s - acc: 0.3634 - val_acc: 0.3083
 Epoch 13/25
-201s - acc: 0.3886 - val_acc: 0.3242
+243s - acc: 0.3886 - val_acc: 0.3242
 Epoch 14/25
-201s - acc: 0.4088 - val_acc: 0.3276
+243s - acc: 0.4088 - val_acc: 0.3276
 Epoch 15/25
-201s - acc: 0.4340 - val_acc: 0.3272
+243s - acc: 0.4340 - val_acc: 0.3272
 Epoch 16/25
-201s - acc: 0.4548 - val_acc: 0.3332
+243s - acc: 0.4548 - val_acc: 0.3332
 Epoch 17/25
-201s - acc: 0.4844 - val_acc: 0.3361
+243s - acc: 0.4844 - val_acc: 0.3361
 Epoch 18/25
-201s - acc: 0.5056 - val_acc: 0.3433
+243s - acc: 0.5056 - val_acc: 0.3433
 Epoch 19/25
-201s - acc: 0.5319 - val_acc: 0.3416
+243s - acc: 0.5319 - val_acc: 0.3416
 Epoch 20/25
-201s - acc: 0.5542 - val_acc: 0.3454
+243s - acc: 0.5542 - val_acc: 0.3454
 Epoch 21/25
-201s - acc: 0.5768 - val_acc: 0.3426
+243s - acc: 0.5768 - val_acc: 0.3426
 Epoch 22/25
-201s - acc: 0.6018 - val_acc: 0.3471
+243s - acc: 0.6018 - val_acc: 0.3471
 Epoch 23/25
-201s - acc: 0.6228 - val_acc: 0.3424
+243s - acc: 0.6228 - val_acc: 0.3424
 Epoch 24/25
-201s - acc: 0.6462 - val_acc: 0.3475
+243s - acc: 0.6462 - val_acc: 0.3475
 Epoch 25/25
-201s - acc: 0.6626 - val_acc: 0.3469
+243s - acc: 0.6626 - val_acc: 0.3469
 
 
