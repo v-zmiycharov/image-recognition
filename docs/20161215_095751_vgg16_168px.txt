@@ -1,0 +1,105 @@
+Date: 25.01.2016 10:08:27
+Number of classes: 5
+Image size: 168px
+Instance: Amazon p2.xlarge
+
+model.add(ZeroPadding2D((1, 1), input_shape=(3, image_size, image_size)))
+model.add(Convolution2D(fc, fs, fs, activation='relu'))
+model.add(ZeroPadding2D((1, 1)))
+model.add(Convolution2D(fc, fs, fs, activation='relu'))
+model.add(MaxPooling2D((2, 2), strides=(2, 2)))
+
+model.add(ZeroPadding2D((1, 1)))
+model.add(Convolution2D(fc*2, fs, fs, activation='relu'))
+model.add(ZeroPadding2D((1, 1)))
+model.add(Convolution2D(fc*2, fs, fs, activation='relu'))
+model.add(MaxPooling2D((2, 2), strides=(2, 2)))
+
+model.add(ZeroPadding2D((1, 1)))
+model.add(Convolution2D(fc*4, fs, fs, activation='relu'))
+model.add(ZeroPadding2D((1, 1)))
+model.add(Convolution2D(fc*4, fs, fs, activation='relu'))
+model.add(ZeroPadding2D((1, 1)))
+model.add(Convolution2D(fc*4, fs, fs, activation='relu'))
+model.add(MaxPooling2D((2, 2), strides=(2, 2)))
+
+model.add(ZeroPadding2D((1, 1)))
+model.add(Convolution2D(fc*8, fs, fs, activation='relu'))
+model.add(ZeroPadding2D((1, 1)))
+model.add(Convolution2D(fc*8, fs, fs, activation='relu'))
+model.add(ZeroPadding2D((1, 1)))
+model.add(Convolution2D(fc*8, fs, fs, activation='relu'))
+model.add(MaxPooling2D((2, 2), strides=(2, 2)))
+
+model.add(ZeroPadding2D((1, 1)))
+model.add(Convolution2D(fc*8, fs, fs, activation='relu'))
+model.add(ZeroPadding2D((1, 1)))
+model.add(Convolution2D(fc*8, fs, fs, activation='relu'))
+model.add(ZeroPadding2D((1, 1)))
+model.add(Convolution2D(fc*8, fs, fs, activation='relu'))
+model.add(MaxPooling2D((2, 2), strides=(2, 2)))
+
+model.add(Flatten())
+model.add(Dense(4096, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(4096, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(num_classes, activation='softmax'))
+
+
+
+		
+Train on 5796 samples, validate on 1450 samples
+Epoch 1/25
+201s - acc: 0.2241 - val_acc: 0.2303
+Epoch 2/25
+201s - acc: 0.2336 - val_acc: 0.3083
+Epoch 3/25
+201s - acc: 0.2412 - val_acc: 0.2910
+Epoch 4/25
+201s - acc: 0.3052 - val_acc: 0.3421
+Epoch 5/25
+201s - acc: 0.3409 - val_acc: 0.3752
+Epoch 6/25
+201s - acc: 0.3753 - val_acc: 0.3924
+Epoch 7/25
+201s - acc: 0.3922 - val_acc: 0.4179
+Epoch 8/25
+201s - acc: 0.4137 - val_acc: 0.4166
+Epoch 9/25
+201s - acc: 0.4208 - val_acc: 0.4014
+Epoch 10/25
+201s - acc: 0.4253 - val_acc: 0.4338
+Epoch 11/25
+201s - acc: 0.4517 - val_acc: 0.4159
+Epoch 12/25
+201s - acc: 0.4752 - val_acc: 0.4510
+Epoch 13/25
+201s - acc: 0.4752 - val_acc: 0.4855
+Epoch 14/25
+201s - acc: 0.5036 - val_acc: 0.5028
+Epoch 15/25
+201s - acc: 0.5122 - val_acc: 0.5083
+Epoch 16/25
+201s - acc: 0.5378 - val_acc: 0.4793
+Epoch 17/25
+201s - acc: 0.5575 - val_acc: 0.5179
+Epoch 18/25
+201s - acc: 0.5575 - val_acc: 0.5007
+Epoch 19/25
+201s - acc: 0.5866 - val_acc: 0.5621
+Epoch 20/25
+201s - acc: 0.5977 - val_acc: 0.5117
+Epoch 21/25
+201s - acc: 0.6310 - val_acc: 0.5490
+Epoch 22/25
+201s - acc: 0.6729 - val_acc: 0.5586
+Epoch 23/25
+201s - acc: 0.7007 - val_acc: 0.5841
+Epoch 24/25
+201s - acc: 0.7279 - val_acc: 0.6069
+Epoch 25/25
+201s - acc: 0.7602 - val_acc: 0.6193
+Accuracy: 58.07%
+
+
