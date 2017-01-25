@@ -1,12 +1,12 @@
 import src.main.models as models
 
-IMAGE_SIZE = 224
+IMAGE_SIZE = 168
 IMAGE_DEPTH = 3
 
-NUM_CLASSES = 10
+NUM_CLASSES = 5
 
 EPOCHS = 25
-LEARN_RATE = 0.1
+LEARN_RATE = 0.01
 MOMENTUM = 0.9
 BATCH_SIZE = 100
 
@@ -21,6 +21,6 @@ METADATA_FILENAME = '_metadata.bin'
 MODEL_JSON_FILENAME = '_model.json'
 MODEL_WEIGHTS_FILENAME = '_model.h5'
 
-NESTEROV = True
+NESTEROV = False
 
 model_function = models.create_vgg16_model
