@@ -1,6 +1,6 @@
 import src.main.models as models
 
-IMAGE_SIZE = 168
+IMAGE_SIZE = 64
 IMAGE_DEPTH = 3
 
 NUM_CLASSES = 5
