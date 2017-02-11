@@ -56,6 +56,21 @@ def create_vgg16_model(num_classes, image_size):
     model.add(Dense(num_classes, activation='softmax'))
     return model
 
+def create_most_simple_model(num_classes, image_size):
+    fs = 3
+    fc = 32
+
+    model = Sequential()
+    model.add(Convolution2D(fc, fs, fs, input_shape=(3, image_size, image_size), border_mode='same',
+                            activation='relu',
+                            W_constraint=maxnorm(3)))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Convolution2D(fc, fs, fs, activation='relu', border_mode='same', W_constraint=maxnorm(3)))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Flatten())
+    model.add(Dense(num_classes, activation='softmax'))
+    return model
+
 def create_simple_model(num_classes, image_size):
     fs = 3
     fc = 32

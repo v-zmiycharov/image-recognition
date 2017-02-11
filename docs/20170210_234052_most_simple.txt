@@ -1,0 +1,81 @@
+Date:  10.02.2017 23:44:52
+
+alligator: 55.23%     153/277
+antelope: 57.59%     148/257
+bat: 50.82%     124/244
+bear: 68.17%     242/355
+bison: 70.98%     225/317
+TOTAL: 61.52%     892/1450
+
+Number of classes:  5
+____________________________________________________________________________________________________
+Layer (type)                     Output Shape          Param #     Connected to                     
+====================================================================================================
+convolution2d_1 (Convolution2D)  (None, 32, 64, 64)    896         convolution2d_input_1[0][0]      
+____________________________________________________________________________________________________
+maxpooling2d_1 (MaxPooling2D)    (None, 32, 32, 32)    0           convolution2d_1[0][0]            
+____________________________________________________________________________________________________
+convolution2d_2 (Convolution2D)  (None, 32, 32, 32)    9248        maxpooling2d_1[0][0]             
+____________________________________________________________________________________________________
+maxpooling2d_2 (MaxPooling2D)    (None, 32, 16, 16)    0           convolution2d_2[0][0]            
+____________________________________________________________________________________________________
+flatten_1 (Flatten)              (None, 8192)          0           maxpooling2d_2[0][0]             
+____________________________________________________________________________________________________
+dense_1 (Dense)                  (None, 5)             40965       flatten_1[0][0]                  
+====================================================================================================
+Total params: 51109
+____________________________________________________________________________________________________
+None
+Train on 5796 samples, validate on 1450 samples
+Epoch 1/25
+215s - loss: 1.5080 - acc: 0.3328 - val_loss: 1.3843 - val_acc: 0.4166
+Epoch 2/25
+203s - loss: 1.3365 - acc: 0.4472 - val_loss: 1.2830 - val_acc: 0.4717
+Epoch 3/25
+184s - loss: 1.2519 - acc: 0.4891 - val_loss: 1.2573 - val_acc: 0.4972
+Epoch 4/25
+175s - loss: 1.2137 - acc: 0.5250 - val_loss: 1.1626 - val_acc: 0.5345
+Epoch 5/25
+181s - loss: 1.1375 - acc: 0.5559 - val_loss: 1.1597 - val_acc: 0.5359
+Epoch 6/25
+185s - loss: 1.1011 - acc: 0.5659 - val_loss: 1.1100 - val_acc: 0.5628
+Epoch 7/25
+202s - loss: 1.0510 - acc: 0.5935 - val_loss: 1.1426 - val_acc: 0.5517
+Epoch 8/25
+202s - loss: 1.0130 - acc: 0.6158 - val_loss: 1.1049 - val_acc: 0.5800
+Epoch 9/25
+208s - loss: 0.9586 - acc: 0.6437 - val_loss: 1.0684 - val_acc: 0.5910
+Epoch 10/25
+188s - loss: 0.9200 - acc: 0.6568 - val_loss: 1.0911 - val_acc: 0.5841
+Epoch 11/25
+196s - loss: 0.9094 - acc: 0.6539 - val_loss: 1.0522 - val_acc: 0.5938
+Epoch 12/25
+180s - loss: 0.8582 - acc: 0.6774 - val_loss: 1.0543 - val_acc: 0.5952
+Epoch 13/25
+189s - loss: 0.8433 - acc: 0.6877 - val_loss: 1.0877 - val_acc: 0.5766
+Epoch 14/25
+172s - loss: 0.7788 - acc: 0.7151 - val_loss: 1.0776 - val_acc: 0.5945
+Epoch 15/25
+173s - loss: 0.7443 - acc: 0.7272 - val_loss: 1.0898 - val_acc: 0.5931
+Epoch 16/25
+173s - loss: 0.7178 - acc: 0.7365 - val_loss: 1.1090 - val_acc: 0.5952
+Epoch 17/25
+176s - loss: 0.6702 - acc: 0.7631 - val_loss: 1.0855 - val_acc: 0.5952
+Epoch 18/25
+173s - loss: 0.6301 - acc: 0.7750 - val_loss: 1.0813 - val_acc: 0.6083
+Epoch 19/25
+173s - loss: 0.5941 - acc: 0.7909 - val_loss: 1.1271 - val_acc: 0.6117
+Epoch 20/25
+171s - loss: 0.5539 - acc: 0.8049 - val_loss: 1.1149 - val_acc: 0.6069
+Epoch 21/25
+170s - loss: 0.5225 - acc: 0.8125 - val_loss: 1.1724 - val_acc: 0.5938
+Epoch 22/25
+169s - loss: 0.4741 - acc: 0.8335 - val_loss: 1.1841 - val_acc: 0.5952
+Epoch 23/25
+170s - loss: 0.4457 - acc: 0.8458 - val_loss: 1.2256 - val_acc: 0.6097
+Epoch 24/25
+170s - loss: 0.4253 - acc: 0.8552 - val_loss: 1.3378 - val_acc: 0.5979
+Epoch 25/25
+169s - loss: 0.3802 - acc: 0.8747 - val_loss: 1.2659 - val_acc: 0.6152
+Accuracy: 61.52%
+

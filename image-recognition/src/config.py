@@ -23,4 +23,4 @@ MODEL_WEIGHTS_FILENAME = '_model.h5'
 
 NESTEROV = False
 
-model_function = models.create_vgg16_model
+model_function = models.create_most_simple_model
