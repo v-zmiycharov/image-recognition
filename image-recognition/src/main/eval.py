@@ -9,6 +9,7 @@ from src.data.imagenet_metadata import IMAGES
 from src.main.train import load_data
 from src.main.train import load_globals
 from src.main.common import get_folder
+from time import localtime, strftime
 
 def load_model(parent_folder):
     json_file = os.path.join(parent_folder, config.MODEL_JSON_FILENAME)
@@ -46,7 +47,8 @@ def format_scores(scores):
         return "-".join([get_label(index) + ":%.2f" % score for index, score in enumerate(score_row) if score >= 0.01])
 
 def log_acc(header, correct, total):
-    print('{0}: {1}%     {2}/{3}'.format(header, "%.2f" % (100*(correct/total)), correct, total))
+    if total > 0:
+        print('{0}: {1}%     {2}/{3}'.format(header, "%.2f" % (100*(correct/total)), correct, total))
 
 def log_info(header, correct_dict, total_dict):
     if config.CROSS_VALIDATION_ENABLED:
@@ -63,9 +65,14 @@ def log_info(header, correct_dict, total_dict):
 
 def init_dict():
     result = dict()
-    for tuple in IMAGES[:config.NUM_CLASSES]:
+    for tuple in IMAGES:
         result[tuple[0]] = 0
     return result
+
+def remove_empty_items(dict):
+    for key, value in dict.items():
+        if value == 0:
+            dict.pop(key)
 
 def main():
     user_folder = get_folder(definitions.MODELS_DIR)
@@ -89,7 +96,11 @@ def main():
             print("Accuracy: %.2f%%" % (scores[1] * 100))
             '''
 
+            index = 1
             for img, label_np in zip(X_data, y_data):
+                if index % 100 == 0:
+                    print(strftime("%H:%M:%S", localtime()), 'Evaluated', index, 'images')
+
                 label = label_np[0]
 
                 folder_total_items[label] += 1
@@ -97,6 +108,8 @@ def main():
                 predicted = predict_label(img)
                 if predicted == label:
                     folder_correct_items[label] += 1
+
+                index += 1
 
 
             for key, value in folder_total_items.items():
