@@ -1,0 +1,158 @@
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[
+12pt, % The default document font size, options: 10pt, 11pt, 12pt
+oneside, % Two side (alternating margins) for binding by default, uncomment to switch to one side
+chapterinoneline,% Have the chapter title next to the number in one single line
+english, % ngerman for German
+onehalfspacing, % Single line spacing, alternatives: onehalfspacing or doublespacing
+%draft, % Uncomment to enable draft mode (no pictures, no links, overfull hboxes indicated)
+nolistspacing, % If the document is onehalfspacing or doublespacing, uncomment this to set spacing in lists to single
+%liststotoc, % Uncomment to add the list of figures/tables/etc to the table of contents
+%toctotoc, % Uncomment to add the main table of contents to the table of contents
+%parskip, % Uncomment to add space between paragraphs
+%nohyperref, % Uncomment to not load the hyperref package
+headsepline, % Uncomment to get a line under the header
+]{MastersDoctoralThesis} % The class file specifying the document structure
+
+\usepackage{cmap}
+
+\usepackage[utf8]{inputenc} % Required for inputting international characters
+\usepackage[T2A]{fontenc} % Output font encoding for international characters
+
+\usepackage[backend=bibtex,style=numeric,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+
+\addbibresource{references.bib} % The filename of the bibliography
+
+\usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
+
+\usepackage{wrapfig}
+\usepackage{float}
+
+\usepackage{caption}
+\captionsetup[table]{name=Таблица}
+\captionsetup[figure]{name=Фигура}
+
+\usepackage{longtable}
+
+\usepackage{indentfirst}
+
+\usepackage{pgfplots}
+\pgfplotsset{
+	width=12.5cm,
+    compat=1.9,
+    height=7.5cm,
+	xlabel={Номер на итерация},
+    ylabel={Точност в \%},
+    xmin=1, xmax=25,
+    ymin=0, ymax=100,
+    xtick={1,5,10,15,20,25},
+    ytick={0,20,40,60,80,100},
+    legend style={at={(0.5,-0.2)},anchor=north},
+    legend cell align=left,
+    ymajorgrids=true,
+    grid style=dashed,}
+    
+\usepackage{microtype}
+
+%----------------------------------------------------------------------------------------
+%	MARGIN SETTINGS
+%----------------------------------------------------------------------------------------
+
+\geometry{
+	paper=a4paper, % Change to letterpaper for US letter
+	inner=2.5cm, % Inner margin
+	outer=3.8cm, % Outer margin
+	bindingoffset=2cm, % Binding offset
+	top=1.5cm, % Top margin
+	bottom=1.5cm, % Bottom margin
+    head=29pt,
+	%showframe,% show how the type block is set on the page
+}
+
+%----------------------------------------------------------------------------------------
+%	THESIS INFORMATION
+%----------------------------------------------------------------------------------------
+
+\hypersetup{pdftitle=Автоматично разделяне на големи количества изображения на класове с използване на дълбоко учене (deep learning)} % Set the PDF's title to your title
+\hypersetup{pdfauthor=Валентин Змийчаров} % Set the PDF's author to your name
+
+\begin{document}
+\sloppy
+
+%\frontmatter % Use roman page numbering style (i, ii, iii, iv...) for the pre-content pages
+
+\mainmatter % Begin numeric (1,2,3...) page numbering
+
+\pagestyle{thesis} % Default to the plain heading style until the thesis style is called for the body content
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\begin{titlepage}
+\begin{center}
+
+\Large \textbf{Софийски университет \\ „Св. Климент Охридски”}\\[0cm]
+\Large Дипломна работа\\[0cm]
+\Large \textit{Катедра „Софтуерни технологии”}\\[0.2cm]
+
+\includegraphics{Figures/logo_su.jpg}
+\includegraphics{Figures/logo_katedra.jpg}\\[0.1cm]
+
+\HRule \\[0.1cm] % Horizontal line
+{\huge \bfseries Автоматично разделяне на големи количества изображения на класове с използване на дълбоко учене (deep learning)\par}\vspace{0.1cm} % Thesis title
+\HRule \\[0.2cm] % Horizontal line
+ 
+\begin{flushleft} \large
+Дипломант:\\ \textbf{Валентин Змийчаров}\\
+Специалност:\\ \textbf{Извличане на информация и откриване на знания}\\
+Факултетен номер:\\ \textbf{24952} \\
+Научен ръководител:\\ \textbf{Д-р Милен Чечев}\\[0.2cm]
+\end{flushleft}
+
+{\large София 2017г.}\\
+ 
+\vfill
+\end{center}
+\end{titlepage}
+
+%----------------------------------------------------------------------------------------
+%	LIST OF CONTENTS/FIGURES/TABLES PAGES
+%----------------------------------------------------------------------------------------
+
+\renewcommand{\contentsname}{Съдържание}
+\tableofcontents % Prints the main table of contents
+
+%----------------------------------------------------------------------------------------
+%	THESIS CONTENT - CHAPTERS
+%----------------------------------------------------------------------------------------
+
+
+% \pagestyle{thesis} % Return the page headers back to the "thesis" style
+
+\include{Chapters/Chapter1}
+\include{Chapters/Chapter2} 
+\include{Chapters/Chapter3}
+\include{Chapters/Chapter4} 
+\include{Chapters/Chapter5} 
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+
+\printbibliography[title={Референции},heading=bibnumbered]
+
+%----------------------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+%	APPLICATIONS
+%----------------------------------------------------------------------------------------
+
+\include{Chapters/Applications}
+
+%---------------------------------------------------------------------------------------- 
+
+\end{document}  
