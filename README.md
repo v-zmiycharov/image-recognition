@@ -10,12 +10,12 @@ It is developed using Python and keras with tensorflow backend (PyCharm as IDE).
 * Linux based OS
 * Python v3+
 * Python packages:
-** numpy: pip install numpy
-** PIL: pip install pillow
-** h5py: 
+ * numpy: pip install numpy
+ * PIL: pip install pillow
+ * h5py: 
 sudo apt-get install libhdf5
 sudo pip3 install h5py
-** keras: pip install keras (https://keras.io/#installation)
+ * keras: pip install keras (https://keras.io/#installation)
 * CUDA toolkit 8.0
 * CuDNN v5
 * Tensorflow
